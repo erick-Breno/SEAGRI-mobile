@@ -127,6 +127,33 @@
           </div>
         </div>
         
+        <!-- Featured Products Section -->
+        <div class="featured-section">
+          <div class="featured-container">
+            <h2 class="featured-title">Produtos em Destaque</h2>
+            <p class="featured-subtitle">Descubra os melhores produtos dos nossos agricultores</p>
+            
+            <div id="featured-products" class="featured-grid">
+              <!-- Featured products will be loaded here -->
+            </div>
+            
+            <div id="no-featured-products" class="no-content hidden">
+              <i class="ri-star-line no-content-icon"></i>
+              <h3 class="no-content-title">Nenhum produto em destaque</h3>
+              <p class="no-content-description">Seja o primeiro a publicar um produto!</p>
+              <button onclick="showSection('publicar')" class="btn btn-primary">
+                Publicar Produto
+              </button>
+            </div>
+            
+            <div class="featured-actions">
+              <button onclick="showSection('produtos')" class="btn btn-secondary">
+                Ver Todos os Produtos
+              </button>
+            </div>
+          </div>
+        </div>
+        
         <!-- Stats Section -->
         <div class="stats-section">
           <div class="stats-container">

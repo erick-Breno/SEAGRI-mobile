@@ -3,17 +3,91 @@ let currentUser = null
 let products = []
 let users = []
 
+// Dados simulados que serão compartilhados entre todos os usuários
+const sharedData = {
+  users: [
+    {
+      id: "1",
+      name: "João Silva",
+      email: "joao@email.com",
+      phone: "(99) 98765-4321",
+      password: "123456",
+      isAdmin: false,
+    },
+    {
+      id: "2",
+      name: "Maria Santos",
+      email: "maria@email.com",
+      phone: "(99) 98765-1234",
+      password: "123456",
+      isAdmin: false,
+    },
+  ],
+  products: [
+    {
+      id: "1",
+      name: "Tomate Orgânico",
+      category: "hortalicas",
+      price: "R$ 8,50/kg",
+      phone: "(99) 98765-4321",
+      description: "Tomates orgânicos frescos, cultivados sem agrotóxicos",
+      image:
+        "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop",
+      userId: "1",
+      userName: "João Silva",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "2",
+      name: "Banana Prata",
+      category: "frutas",
+      price: "R$ 4,00/kg",
+      phone: "(99) 98765-1234",
+      description: "Bananas doces e maduras, direto do pé",
+      image:
+        "https://images.pexels.com/photos/5966630/pexels-photo-5966630.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop",
+      userId: "2",
+      userName: "Maria Santos",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "3",
+      name: "Leite Fresco",
+      category: "laticinios",
+      price: "R$ 6,00/litro",
+      phone: "(99) 98765-4321",
+      description: "Leite fresco de vacas criadas no pasto",
+      image:
+        "https://images.pexels.com/photos/773253/pexels-photo-773253.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop",
+      userId: "1",
+      userName: "João Silva",
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: "4",
+      name: "Feijão Preto",
+      category: "graos",
+      price: "R$ 12,00/kg",
+      phone: "(99) 98765-1234",
+      description: "Feijão preto de primeira qualidade",
+      image:
+        "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop",
+      userId: "2",
+      userName: "Maria Santos",
+      createdAt: new Date().toISOString(),
+    },
+  ],
+}
+
 // Initialize app
 document.addEventListener("DOMContentLoaded", () => {
   initializeApp()
 })
 
 function initializeApp() {
-  // Load data from localStorage
-  loadUsers()
-  loadProducts()
+  loadSharedData()
 
-  // Check if user is logged in
+  // Check if user is logged in (ainda usando localStorage para sessão do usuário)
   const savedUser = localStorage.getItem("currentUser")
   if (savedUser) {
     currentUser = JSON.parse(savedUser)
@@ -22,6 +96,64 @@ function initializeApp() {
 
   // Setup event listeners
   setupEventListeners()
+}
+
+function loadSharedData() {
+  users = [...sharedData.users]
+  products = [...sharedData.products]
+}
+
+function getFeaturedProducts() {
+  if (products.length === 0) return []
+
+  // Embaralha os produtos e pega até 4 para destaque
+  const shuffled = [...products].sort(() => 0.5 - Math.random())
+  return shuffled.slice(0, Math.min(4, products.length))
+}
+
+function loadFeaturedProducts() {
+  const container = document.getElementById("featured-products")
+  const noFeatured = document.getElementById("no-featured-products")
+
+  const featuredProducts = getFeaturedProducts()
+
+  if (featuredProducts.length === 0) {
+    container.innerHTML = ""
+    noFeatured.classList.remove("hidden")
+    return
+  }
+
+  noFeatured.classList.add("hidden")
+
+  container.innerHTML = featuredProducts
+    .map(
+      (product) => `
+        <div class="featured-card product-card" data-category="${product.category}">
+            <div class="product-image" style="background-image: url('${product.image}');"></div>
+            <div class="product-content">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-category">${getCategoryName(product.category)}</p>
+                <p class="product-price">${product.price}</p>
+                <p class="product-seller">Por: ${product.userName}</p>
+                <div class="product-actions">
+                    <button onclick="contactSeller('${product.phone}')" class="btn btn-primary">
+                        <i class="ri-phone-line"></i>Contatar
+                    </button>
+                    ${
+                      currentUser && currentUser.isAdmin
+                        ? `
+                        <button onclick="deleteProduct('${product.id}')" class="btn btn-danger">
+                            <i class="ri-delete-bin-line"></i>
+                        </button>
+                    `
+                        : ""
+                    }
+                </div>
+            </div>
+        </div>
+    `,
+    )
+    .join("")
 }
 
 function setupEventListeners() {
@@ -143,7 +275,7 @@ function handleRegister(e) {
   }
 
   users.push(newUser)
-  saveUsers()
+  // Removendo saveUsers() pois não usamos mais localStorage
 
   currentUser = newUser
   localStorage.setItem("currentUser", JSON.stringify(currentUser))
@@ -181,9 +313,9 @@ function showMainApp() {
   // Update profile info
   updateProfileInfo()
 
-  // Load products
   loadProductsDisplay()
   loadUserProducts()
+  loadFeaturedProducts()
 
   // Show home section by default
   showSection("home")
@@ -244,16 +376,15 @@ function handlePublishProduct(e) {
   }
 
   products.push(newProduct)
-  saveProducts()
 
   // Reset form
   document.getElementById("publishForm").reset()
 
   showModal("Produto Publicado!", "Seu produto foi publicado com sucesso!")
 
-  // Refresh displays
   loadProductsDisplay()
   loadUserProducts()
+  loadFeaturedProducts()
 }
 
 function handleContactForm(e) {
@@ -300,21 +431,21 @@ function loadProductsDisplay() {
   grid.innerHTML = products
     .map(
       (product) => `
-        <div class="product-card bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow" data-category="${product.category}">
-            <div class="h-48 bg-cover bg-center" style="background-image: url('${product.image}');"></div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-                <p class="text-gray-400 text-sm mb-2">${getCategoryName(product.category)}</p>
-                <p class="text-primary font-bold text-xl mb-2">${product.price}</p>
-                <p class="text-gray-300 text-sm mb-3">Por: ${product.userName}</p>
-                <div class="flex gap-2">
-                    <button onclick="contactSeller('${product.phone}')" class="flex-1 bg-primary text-white py-2 rounded-button hover:bg-green-600 transition-colors cursor-pointer">
-                        <i class="ri-phone-line mr-2"></i>Contatar
+        <div class="product-card" data-category="${product.category}">
+            <div class="product-image" style="background-image: url('${product.image}');"></div>
+            <div class="product-content">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-category">${getCategoryName(product.category)}</p>
+                <p class="product-price">${product.price}</p>
+                <p class="product-seller">Por: ${product.userName}</p>
+                <div class="product-actions">
+                    <button onclick="contactSeller('${product.phone}')" class="btn btn-primary">
+                        <i class="ri-phone-line"></i>Contatar
                     </button>
                     ${
-                      currentUser.isAdmin
+                      currentUser && currentUser.isAdmin
                         ? `
-                        <button onclick="deleteProduct('${product.id}')" class="bg-red-600 text-white px-3 py-2 rounded-button hover:bg-red-700 transition-colors cursor-pointer">
+                        <button onclick="deleteProduct('${product.id}')" class="btn btn-danger">
                             <i class="ri-delete-bin-line"></i>
                         </button>
                     `
@@ -348,15 +479,17 @@ function loadUserProducts() {
   container.innerHTML = userProducts
     .map(
       (product) => `
-        <div class="product-card bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-            <div class="h-48 bg-cover bg-center" style="background-image: url('${product.image}');"></div>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-                <p class="text-gray-400 text-sm mb-2">${getCategoryName(product.category)}</p>
-                <p class="text-primary font-bold text-xl mb-3">${product.price}</p>
-                <button onclick="deleteUserProduct('${product.id}')" class="w-full bg-red-600 text-white py-2 rounded-button hover:bg-red-700 transition-colors cursor-pointer">
-                    <i class="ri-delete-bin-line mr-2"></i>Excluir
-                </button>
+        <div class="product-card">
+            <div class="product-image" style="background-image: url('${product.image}');"></div>
+            <div class="product-content">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-category">${getCategoryName(product.category)}</p>
+                <p class="product-price">${product.price}</p>
+                <div class="product-actions">
+                    <button onclick="deleteUserProduct('${product.id}')" class="btn btn-danger full-width">
+                        <i class="ri-delete-bin-line"></i>Excluir
+                    </button>
+                </div>
             </div>
         </div>
     `,
@@ -385,8 +518,8 @@ function contactSeller(phone) {
 function deleteProduct(productId) {
   if (confirm("Tem certeza que deseja excluir este produto?")) {
     products = products.filter((p) => p.id !== productId)
-    saveProducts()
     loadProductsDisplay()
+    loadFeaturedProducts() // Atualizando produtos em destaque
     showModal("Produto Excluído", "O produto foi removido com sucesso.")
   }
 }
@@ -394,9 +527,9 @@ function deleteProduct(productId) {
 function deleteUserProduct(productId) {
   if (confirm("Tem certeza que deseja excluir este produto?")) {
     products = products.filter((p) => p.id !== productId)
-    saveProducts()
     loadProductsDisplay()
     loadUserProducts()
+    loadFeaturedProducts() // Atualizando produtos em destaque
     showModal("Produto Excluído", "Seu produto foi removido com sucesso.")
   }
 }
@@ -444,25 +577,19 @@ function closeModal() {
   document.getElementById("successModal").classList.add("hidden")
 }
 
-// Data persistence functions
+// Data persistence functions - apenas para usuários (sessão)
 function saveUsers() {
-  localStorage.setItem("agroconnect_users", JSON.stringify(users))
+  // Mantendo apenas para compatibilidade, mas não salvando dados compartilhados
 }
 
 function loadUsers() {
-  const savedUsers = localStorage.getItem("agroconnect_users")
-  if (savedUsers) {
-    users = JSON.parse(savedUsers)
-  }
+  // Dados já carregados em loadSharedData()
 }
 
 function saveProducts() {
-  localStorage.setItem("agroconnect_products", JSON.stringify(products))
+  // Removido - produtos não são mais salvos no localStorage
 }
 
 function loadProducts() {
-  const savedProducts = localStorage.getItem("agroconnect_products")
-  if (savedProducts) {
-    products = JSON.parse(savedProducts)
-  }
+  // Dados já carregados em loadSharedData()
 }
