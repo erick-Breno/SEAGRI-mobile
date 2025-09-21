@@ -269,6 +269,7 @@ h6 {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-direction: column;
 }
 
 .brand-name {
@@ -415,10 +416,7 @@ h6 {
   position: relative;
   min-height: 400px;
   /* Mudando imagem de fundo para uma mais relacionada à agricultura */
-  background-image: url("https://images.pexels.com/photos/1595104/pexels-photo-1595104.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--gray-900);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -436,20 +434,24 @@ h6 {
   z-index: 10;
   text-align: center;
   padding: 64px 24px;
-  max-width: 800px;
+  max-width: 100%;
+  min-height: 400px;
+  background-image: url("https://i.pinimg.com/originals/07/cd/cc/07cdcc57b60d13f692e91c1bc89c5d64.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: var(--border-radius);
+  /* Adicionando overlay escuro para melhor legibilidade do texto */
+  position: relative;
 }
 
-.hero-title {
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  line-height: 1.1;
-}
-
-.hero-subtitle {
-  font-size: 20px;
-  margin-bottom: 32px;
-  color: var(--gray-200);
+.hero-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: var(--border-radius);
+  z-index: -1;
 }
 
 /* =========================================
