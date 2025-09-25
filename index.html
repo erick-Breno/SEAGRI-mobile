@@ -1,385 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgroConnect - Açailândia-MA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <!-- Login/Register Screen -->
-  <div id="auth-screen" class="auth-screen">
-    <div class="auth-container">
-      <div class="auth-header">
-        <div class="logo-container">
-          <img src="./img/image.png" alt="Escudo de Açailândia-MA" class="logo">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroConnect - Açailândia-MA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loader" class="loader-overlay hidden"><div class="loader-spinner"></div></div>
+    
+    <div id="auth-screen" class="auth-screen">
+      <div class="auth-container">
+        <div class="auth-header"><img src="./img/image.png" alt="Escudo de Açailândia-MA" class="logo" /><p class="location-text">Açailândia - Maranhão</p></div>
+        <div id="login-form" class="auth-form">
+          <h2 class="form-title">Entrar na sua Conta</h2>
+          <form id="loginForm">
+            <div class="form-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" placeholder="seu@email.com" required /></div>
+            <div class="form-group"><label for="loginPassword">Senha</label><input type="password" id="loginPassword" placeholder="Sua senha" required /></div>
+            <button type="submit" class="btn btn-primary btn-full"><i class="ri-login-box-line"></i> Entrar</button>
+          </form>
+          <p class="form-footer">Não tem conta? <button id="showRegister" class="link-button">Cadastre-se</button></p>
         </div>
-        <p class="location-text">Açailândia - Maranhão</p>
-      </div>
-      
-      <!-- Login Form -->
-      <div id="login-form" class="auth-form">
-        <h2 class="form-title">Entrar</h2>
-        <form id="loginForm">
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" id="loginEmail" class="form-input" placeholder="seu@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Senha</label>
-            <input type="password" id="loginPassword" class="form-input" placeholder="Sua senha" required>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">
-            Entrar
-          </button>
-        </form>
-        <p class="form-footer">
-          Não tem conta? 
-          <button id="showRegister" class="link-button">Cadastre-se</button>
-        </p>
-      </div>
-      
-      <!-- Register Form -->
-      <div id="register-form" class="auth-form hidden">
-        <h2 class="form-title">Cadastrar</h2>
-        <form id="registerForm">
-          <div class="form-group">
-            <label class="form-label">Nome Completo</label>
-            <input type="text" id="registerName" class="form-input" placeholder="Seu nome completo" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" id="registerEmail" class="form-input" placeholder="seu@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Telefone</label>
-            <input type="tel" id="registerPhone" class="form-input" placeholder="(99) 99999-9999" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Senha</label>
-            <input type="password" id="registerPassword" class="form-input" placeholder="Sua senha" required>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">
-            Cadastrar
-          </button>
-        </form>
-        <p class="form-footer">
-          Já tem conta? 
-          <button id="showLogin" class="link-button">Entrar</button>
-        </p>
+        <div id="register-form" class="auth-form hidden">
+          <div class="form-header-action"><button id="backToLoginBtn" class="back-btn"><i class="ri-arrow-left-line"></i> Voltar</button></div>
+          <h2 class="form-title">Crie sua Conta</h2>
+          <form id="registerForm">
+            <div class="form-group"><label for="registerName">Nome Completo</label><input type="text" id="registerName" placeholder="Seu nome completo" required /></div>
+            <div class="form-group"><label for="registerEmail">Email</label><input type="email" id="registerEmail" placeholder="seu@email.com" required /></div>
+            <div class="form-group"><label for="registerPhone">Telefone</label><input type="tel" id="registerPhone" placeholder="(99) 99999-9999" required /></div>
+            <div class="form-group"><label for="registerPassword">Senha</label><input type="password" id="registerPassword" placeholder="Crie uma senha forte" required /></div>
+            <button type="submit" class="btn btn-primary btn-full"><i class="ri-user-add-line"></i> Cadastrar</button>
+          </form>
+          <p class="form-footer">Já tem conta? <button id="showLogin" class="link-button">Entrar</button></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Main App -->
-  <div id="main-app" class="hidden">
-    <!-- Desktop Navigation -->
-    <nav class="desktop-nav">
-      <div class="nav-container">
-        <div class="nav-content">
-          <div class="nav-brand">
-            <span class="brand-name">AgroConnect</span>
-            <span class="brand-location">Açailândia-MA</span>
-          </div>
-          <div class="nav-links">
-            <a href="#home" class="nav-link">Início</a>
-            <a href="#produtos" class="nav-link">Produtos</a>
-            <a href="#publicar" class="nav-link">Publicar</a>
-            <a href="#perfil" class="nav-link">Perfil</a>
-            <a href="#contato" class="nav-link">Sugestões</a>
-            <button id="logoutBtn" class="logout-btn">
-              <i class="ri-logout-circle-line"></i>Sair
-            </button>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <div id="main-app" class="hidden">
+      <nav class="desktop-nav"><div class="nav-container"><div class="nav-content"><div class="nav-brand"><span class="brand-name">AgroConnect</span><span class="brand-location">Açailândia-MA</span></div><div class="nav-links"><a href="#home" class="nav-link">Início</a><a href="#produtos" class="nav-link">Produtos</a><a href="#publicar" class="nav-link">Publicar</a><a href="#perfil" class="nav-link">Perfil</a><a href="#notificacoes" class="nav-link user-only-nav">Notificações</a> <a href="#contato" class="nav-link user-only-nav">Enviar Sugestão</a><a href="#admin-panel" class="nav-link admin-only-nav hidden"><i class="ri-shield-user-line"></i> Admin</a>
+      <!-- BOTÃO MODIFICADO ABAIXO (REMOVIDO O TEXTO 'Sair') -->
+      <button id="logoutBtn" class="logout-btn"><i class="ri-logout-circle-line"></i></button></div></div></div></nav>
+      <header class="mobile-header"><div class="mobile-header-content"><div class="mobile-brand"><span class="brand-name">AgroConnect</span><span class="mobile-brand-location">Açailândia-MA</span></div><button id="mobileLogoutBtn" class="mobile-logout-btn" aria-label="Sair"><i class="ri-logout-circle-line"></i></button></div></header>
+      
+      <main class="main-content">
+        <section id="home" class="section-content"><div class="hero-section"><div class="hero-overlay"></div><div class="hero-content"><h1 class="font-pacifico">Conectando Produtores de Açailândia</h1><p>A plataforma para agricultores da região anunciarem e venderem seus produtos.</p><button onclick="showSection('publicar')" class="btn btn-primary btn-hero">Anunciar Produto</button></div></div><div class="featured-section"><div class="featured-container"><h2><i class="ri-star-smile-line"></i> Produtos em Destaque</h2><div id="featured-products" class="featured-grid"></div><div id="no-featured-products" class="no-content hidden"><i class="ri-star-line"></i><h3>Nenhum produto em destaque</h3><button onclick="showSection('publicar')" class="btn btn-primary">Seja o primeiro a publicar</button></div><div class="featured-actions"><button onclick="showSection('produtos')" class="btn btn-secondary">Ver Todos os Produtos</button></div></div></div><div class="stats-section"><div class="stats-container"><div class="stats-grid"><div class="stat-item"><div class="stat-icon"><i class="ri-leaf-line"></i></div><h3>Agricultura Local</h3></div><div class="stat-item"><div class="stat-icon"><i class="ri-group-line"></i></div><h3>Comunidade Forte</h3></div><div class="stat-item"><div class="stat-icon"><i class="ri-shield-check-line"></i></div><h3>Qualidade Garantida</h3></div></div></div></div></section>
+        <section id="produtos" class="section-content hidden"><div class="section-container"><h2><i class="ri-shopping-bag-3-line"></i> Produtos Disponíveis</h2><div class="filters-container"><button class="filter-btn filter-active" data-filter="todos">Todos</button><button class="filter-btn" data-filter="hortalicas">Hortaliças</button><button class="filter-btn" data-filter="frutas">Frutas</button><button class="filter-btn" data-filter="laticinios">Laticínios</button><button class="filter-btn" data-filter="graos">Grãos</button></div><div id="products-grid" class="products-grid"></div><div id="no-products" class="no-content hidden"><i class="ri-shopping-bag-line"></i><h3>Nenhum produto encontrado</h3><button onclick="showSection('publicar')" class="btn btn-primary">Anunciar um Produto</button></div></div></section>
+        <section id="publicar" class="section-content hidden"><div class="form-container"><h2 id="publish-form-title"><i class="ri-add-circle-line"></i> Anunciar Novo Produto</h2><form id="publishForm" class="publish-form" data-mode="new" data-product-id=""><div class="form-row"><div class="form-group"><label for="productName">Nome do Produto</label><input type="text" id="productName" placeholder="Ex: Tomate Orgânico" required/></div><div class="form-group"><label for="productCategory">Categoria</label><select id="productCategory" required><option value="" disabled selected>Selecione</option><option value="hortalicas">Hortaliças</option><option value="frutas">Frutas</option><option value="laticinios">Laticínios</option><option value="graos">Grãos</option></select></div></div><div class="form-row"><div class="form-group"><label for="productPrice">Preço (Ex: 10,50)</label><input type="text" id="productPrice" placeholder="Apenas números e vírgula" required/></div><div class="form-group"><label for="productPhone">Whatsapp para contato</label><input type="tel" id="productPhone" placeholder="(99) 90000-0000" required/></div></div><div class="form-group"><label for="productDescription">Descrição do Produto</label><textarea id="productDescription" rows="4" placeholder="Fale um pouco sobre seu produto, como foi cultivado, etc."></textarea></div><div class="form-group"><label for="productImage">URL da Imagem</label><input type="url" id="productImage" placeholder="https://exemplo.com/imagem.jpg"/><p class="form-help">Link de uma imagem online do produto</p></div><button type="submit" class="btn btn-primary btn-full" id="publish-form-submit-btn"><i class="ri-send-plane-fill"></i> Publicar Anúncio</button></form></div></section>
+        <section id="perfil" class="section-content hidden"><div class="section-container"><div class="profile-card"><div class="profile-header"><div class="profile-avatar-wrapper"><img id="profileAvatar" src="img/default-avatar.png" alt="Foto do Perfil" class="profile-avatar"/></div><div class="profile-header-info"><h2><i class="ri-user-line"></i> <span id="profileName">-</span></h2><p id="profileEmail" class="profile-email-display">-</p></div><div class="profile-header-actions"><button onclick="openEditProfileModal()" class="btn btn-secondary"><i class="ri-edit-2-line"></i> Editar Perfil</button><button onclick="showSection('configuracoes')" class="btn btn-secondary"><i class="ri-settings-3-line"></i></button><button id="profileLogoutBtn" class="btn btn-danger"><i class="ri-logout-box-line"></i> Sair</button></div></div><div class="profile-info"><div class="profile-item"><p>Telefone:</p><p id="profilePhone">-</p></div><div class="profile-item"><p>Produtos à Venda:</p><p id="profileProductCount">0</p></div></div></div><div id="user-gallery-section"><h3><i class="ri-camera-lens-line"></i> Minha Galeria</h3><div id="user-gallery" class="gallery-grid"></div><div id="no-gallery-photos" class="no-content hidden"><i class="ri-gallery-line"></i><h3>Nenhuma foto na galeria</h3><p>Adicione fotos da sua horta ou fazenda para os clientes conhecerem seu trabalho!</p><button onclick="openEditProfileModal()" class="btn btn-primary">Adicionar Fotos</button></div></div><h3>Meus Produtos à Venda</h3><div id="user-products" class="products-grid"></div><div id="no-user-products" class="no-content hidden"><i class="ri-shopping-bag-line"></i><h3>Você não tem produtos à venda</h3><button onclick="showSection('publicar')" class="btn btn-primary">Anunciar Primeiro Produto</button></div></div></section>
+        <section id="seller-profile" class="section-content hidden"><div class="section-container" id="seller-profile-content"></div></section>
+        <section id="notificacoes" class="section-content hidden"><div class="section-container"><h2><i class="ri-history-line"></i> Minhas Sugestões</h2><p>Acompanhe as respostas das suas sugestões</p><div id="user-suggestions-list" class="suggestions-list"></div><div id="no-user-suggestions" class="no-content hidden"><i class="ri-chat-history-line"></i><h3>Nenhuma sugestão enviada</h3><button onclick="showSection('contato')" class="btn btn-primary">Enviar uma Sugestão</button></div></div></section>
+        <section id="configuracoes" class="section-content hidden"><div class="section-container"><h2><i class="ri-settings-3-line"></i> Configurações</h2><div class="settings-card"><h3><i class="ri-palette-line"></i> Paleta de Cores</h3><div id="theme-selector" class="theme-selector"></div></div><div class="settings-card"><h3><i class="ri-font-size"></i> Tamanho do Texto</h3><div id="font-size-selector" class="font-size-selector"></div></div></div></section>
+        <section id="contato" class="section-content hidden"><div class="form-container"><h2><i class="ri-lightbulb-flash-line"></i> Enviar Nova Sugestão</h2><form id="contactForm" class="contact-form"><div class="form-group"><label for="contactSubject">Assunto</label><input type="text" id="contactSubject" placeholder="Sobre o que é a sua sugestão?" required/></div><div class="form-group"><label for="contactMessage">Sua Sugestão</label><textarea id="contactMessage" rows="6" placeholder="Descreva sua ideia ou feedback..." required></textarea></div><button type="submit" class="btn btn-primary btn-full"><i class="ri-send-plane-2-fill"></i> Enviar Feedback</button></form></div></section>
+        <section id="admin-panel" class="section-content hidden"><div class="section-container"><h2><i class="ri-shield-user-line"></i> Painel do Administrador</h2><div class="admin-tabs"><button class="admin-tab-btn active" data-tab="users">Usuários</button><button class="admin-tab-btn" data-tab="suggestions">Sugestões</button></div><div id="admin-users-content" class="admin-tab-content"><div class="admin-user-filters"><button class="admin-user-filter-btn active" data-filter="all">Todos</button><button class="admin-user-filter-btn" data-filter="with-products">Com Produtos</button><button class="admin-user-filter-btn" data-filter="without-products">Sem Produtos</button></div><div id="admin-users-list" class="admin-users-list"></div><div id="no-admin-users" class="no-content hidden"><h3>Nenhum usuário encontrado</h3></div></div><div id="admin-suggestions-content" class="admin-tab-content hidden"><h2><i class="ri-inbox-line"></i> Sugestões Recebidas</h2><div id="admin-suggestions-list" class="suggestions-list"></div><div id="no-admin-suggestions" class="no-content hidden"><i class="ri-mail-unread-line"></i><h3>Nenhuma sugestão recebida</h3></div></div></div></section>
+      </main>
 
-    <!-- Mobile Header -->
-    <header class="mobile-header">
-      <div class="mobile-header-content">
-        <div class="mobile-brand">
-          <span class="mobile-brand-name">AgroConnect</span>
-          <span class="mobile-brand-location">Açailândia-MA</span>
-        </div>
-        <button id="mobileLogoutBtn" class="mobile-logout-btn">
-          <i class="ri-logout-circle-line"></i>
-        </button>
-      </div>
-    </header>
+      <nav class="mobile-nav"><div class="mobile-nav-grid"><a href="#home" class="mobile-nav-item"><i class="ri-home-line"></i><span>Início</span></a><a href="#produtos" class="mobile-nav-item"><i class="ri-shopping-bag-line"></i><span>Produtos</span></a><a href="#publicar" class="mobile-nav-item"><i class="ri-add-circle-line"></i><span>Publicar</span></a><a href="#perfil" class="mobile-nav-item"><i class="ri-user-line"></i><span>Perfil</span></a><a href="#notificacoes" class="mobile-nav-item" id="mobile-nav-extra-link"><i class="ri-notification-3-line"></i><span>Notificações</span></a></div></nav>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Home Section -->
-      <section id="home" class="section-content">
-        <div class="hero-section">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <h1 class="hero-title">Conectando Produtores de Açailândia</h1>
-            <p class="hero-subtitle">Plataforma para agricultores de Açailândia-MA divulgarem seus produtos</p>
-            <button onclick="showSection('publicar')" class="btn btn-primary btn-hero">
-              Publicar Produto
-            </button>
-          </div>
+    <!-- MODAIS -->
+    <div id="successModal" class="modal hidden"><div class="modal-content" role="alert"><div class="modal-body"><div class="modal-icon"><i class="ri-check-line"></i></div><h3 id="modalTitle" class="modal-title"></h3><p id="modalMessage"></p><button class="btn btn-primary close-modal-btn" data-modal-id="successModal">Fechar</button></div></div></div>
+    <div id="confirmModal" class="modal hidden"><div class="modal-content" role="alertdialog"><div class="modal-body"><div class="modal-icon warning-icon"><i class="ri-question-mark"></i></div><h3 id="confirmModalTitle" class="modal-title"></h3><p id="confirmModalText"></p><div class="modal-actions"><button class="btn btn-secondary close-modal-btn" data-modal-id="confirmModal">Cancelar</button><button id="confirmModalBtn" class="btn btn-danger">Confirmar</button></div></div></div></div>
+    <div id="suggestionModal" class="modal hidden"><div class="modal-content suggestion-modal-content" role="dialog"><div class="modal-header"><h3 id="modalSuggestionSubject"></h3><button class="close-btn close-modal-btn" data-modal-id="suggestionModal" aria-label="Fechar modal"><i class="ri-close-line"></i></button></div><div class="modal-body"><div class="suggestion-details"><p><strong>De:</strong> <span id="modalSuggestionUser"></span></p><p><strong>Email:</strong> <span id="modalSuggestionEmail"></span></p><p><strong>Data:</strong> <span id="modalSuggestionDate"></span></p><p class="suggestion-message-box" id="modalSuggestionMessage"></p></div><div id="existingReply" class="existing-reply-box hidden"><h5 id="replyBoxTitle"></h5><p id="existingReplyText"></p></div><div class="admin-only"><hr class="modal-divider"/><div class="suggestion-reply-section"><h4>Responder:</h4><textarea id="modalSuggestionReply" rows="5"></textarea></div></div></div><div class="modal-footer admin-only"><button id="deleteSuggestionBtn" class="btn btn-danger"><i class="ri-delete-bin-7-line"></i> Excluir</button><button id="sendReplyBtn" class="btn btn-primary"><i class="ri-send-plane-fill"></i> Enviar</button></div></div></div>
+    <div id="galleryModal" class="modal hidden"><div class="modal-content-gallery"><button class="close-btn-gallery close-modal-btn" data-modal-id="galleryModal">&times;</button><img id="galleryModalImage" src="" alt="Imagem da Galeria Ampliada"></div></div>
+    
+    <div id="editProfileModal" class="modal hidden">
+      <div class="modal-content" role="dialog">
+        <div class="modal-header">
+          <h3>Editar Perfil</h3>
+          <button class="close-btn close-modal-btn" data-modal-id="editProfileModal"><i class="ri-close-line"></i></button>
         </div>
-        
-        <!-- Featured Products Section -->
-        <div class="featured-section">
-          <div class="featured-container">
-            <h2 class="featured-title">Produtos em Destaque</h2>
-            <p class="featured-subtitle">Descubra os melhores produtos dos nossos agricultores</p>
-            
-            <div id="featured-products" class="featured-grid">
-              <!-- Featured products will be loaded here -->
-            </div>
-            
-            <div id="no-featured-products" class="no-content hidden">
-              <i class="ri-star-line no-content-icon"></i>
-              <h3 class="no-content-title">Nenhum produto em destaque</h3>
-              <p class="no-content-description">Seja o primeiro a publicar um produto!</p>
-              <button onclick="showSection('publicar')" class="btn btn-primary">
-                Publicar Produto
-              </button>
-            </div>
-            
-            <div class="featured-actions">
-              <button onclick="showSection('produtos')" class="btn btn-secondary">
-                Ver Todos os Produtos
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Stats Section -->
-        <div class="stats-section">
-          <div class="stats-container">
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div class="stat-icon">
-                  <i class="ri-leaf-line"></i>
-                </div>
-                <h3 class="stat-title">Agricultura Local</h3>
-                <p class="stat-description">Fortalecendo a economia rural de Açailândia</p>
-              </div>
-              <div class="stat-item">
-                <div class="stat-icon">
-                  <i class="ri-group-line"></i>
-                </div>
-                <h3 class="stat-title">Comunidade</h3>
-                <p class="stat-description">Conectando produtores e consumidores locais</p>
-              </div>
-              <div class="stat-item">
-                <div class="stat-icon">
-                  <i class="ri-shield-check-line"></i>
-                </div>
-                <h3 class="stat-title">Qualidade</h3>
-                <p class="stat-description">Produtos frescos direto do produtor</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Products Section -->
-      <section id="produtos" class="section-content hidden">
-        <div class="section-container">
-          <h2 class="section-title">Produtos Disponíveis</h2>
-          
-          <!-- Filters -->
-          <div class="filters-container">
-            <button class="filter-btn filter-active" data-filter="todos">Todos</button>
-            <button class="filter-btn" data-filter="hortalicas">Hortaliças</button>
-            <button class="filter-btn" data-filter="frutas">Frutas</button>
-            <button class="filter-btn" data-filter="laticinios">Laticínios</button>
-            <button class="filter-btn" data-filter="graos">Grãos</button>
-          </div>
-
-          <!-- Products Grid -->
-          <div id="products-grid" class="products-grid">
-            <!-- Products will be loaded here -->
-          </div>
-          
-          <div id="no-products" class="no-content hidden">
-            <i class="ri-shopping-bag-line no-content-icon"></i>
-            <h3 class="no-content-title">Nenhum produto encontrado</h3>
-            <p class="no-content-description">Seja o primeiro a publicar um produto!</p>
-            <button onclick="showSection('publicar')" class="btn btn-primary">
-              Publicar Produto
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Publish Section -->
-      <section id="publicar" class="section-content hidden">
-        <div class="form-container">
-          <h2 class="section-title">Publicar Produto</h2>
-          
-          <form id="publishForm" class="publish-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Nome do Produto</label>
-                <input type="text" id="productName" class="form-input" placeholder="Ex: Tomate Orgânico" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Categoria</label>
-                <select id="productCategory" class="form-input" required>
-                  <option value="">Selecione uma categoria</option>
-                  <option value="hortalicas">Hortaliças</option>
-                  <option value="frutas">Frutas</option>
-                  <option value="laticinios">Laticínios</option>
-                  <option value="graos">Grãos</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Preço</label>
-                <input type="text" id="productPrice" class="form-input" placeholder="Ex: R$ 8,50/kg" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Telefone para Contato</label>
-                <input type="tel" id="productPhone" class="form-input" placeholder="(99) 99999-9999" required>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Descrição</label>
-              <textarea id="productDescription" rows="4" class="form-input" placeholder="Descreva seu produto..."></textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">URL da Imagem</label>
-              <input type="url" id="productImage" class="form-input" placeholder="https://exemplo.com/imagem.jpg">
-              <p class="form-help">Cole o link de uma imagem do seu produto</p>
-            </div>
-            
-            <button type="submit" class="btn btn-primary btn-full">
-              <i class="ri-add-line"></i>Publicar Produto
-            </button>
+        <div class="modal-body" style="text-align: left;">
+          <form id="editProfileForm">
+            <div class="form-group"><label for="editProfileName">Nome Completo</label><input type="text" id="editProfileName" required /></div>
+            <div class="form-group"><label for="editProfilePhone">Telefone</label><input type="tel" id="editProfilePhone" required /></div>
+            <div class="form-group"><label for="editProfilePicture">URL da Foto de Perfil</label><input type="url" id="editProfilePicture" placeholder="https://exemplo.com/foto.jpg" /></div>
+            <div class="form-group"><label for="editProfileGallery">URLs da Galeria (uma por linha)</label><textarea id="editProfileGallery" rows="4" placeholder="https://exemplo.com/foto1.jpg\nhttps://exemplo.com/foto2.jpg"></textarea></div>
+            <button type="submit" class="btn btn-primary btn-full">Salvar Alterações</button>
           </form>
         </div>
-      </section>
-
-      <!-- Profile Section -->
-      <section id="perfil" class="section-content hidden">
-        <div class="section-container">
-          <div class="profile-card">
-            <h2 class="profile-title">Meu Perfil</h2>
-            <div class="profile-info">
-              <div class="profile-item">
-                <p class="profile-label">Nome:</p>
-                <p id="profileName" class="profile-value">-</p>
-              </div>
-              <div class="profile-item">
-                <p class="profile-label">Email:</p>
-                <p id="profileEmail" class="profile-value">-</p>
-              </div>
-              <div class="profile-item">
-                <p class="profile-label">Telefone:</p>
-                <p id="profilePhone" class="profile-value">-</p>
-              </div>
-              <div class="profile-item">
-                <p class="profile-label">Produtos Publicados:</p>
-                <p id="profileProductCount" class="profile-value">0</p>
-              </div>
-            </div>
-          </div>
-          
-          <h3 class="subsection-title">Meus Produtos</h3>
-          <div id="user-products" class="products-grid">
-            <!-- User products will be loaded here -->
-          </div>
-          
-          <div id="no-user-products" class="no-content hidden">
-            <i class="ri-shopping-bag-line no-content-icon"></i>
-            <h3 class="no-content-title">Você ainda não publicou nenhum produto</h3>
-            <p class="no-content-description">Comece publicando seu primeiro produto!</p>
-            <button onclick="showSection('publicar')" class="btn btn-primary">
-              Publicar Produto
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contato" class="section-content hidden">
-        <div class="form-container">
-          <h2 class="section-title">Sugestões de Melhoria</h2>
-          <p class="section-description">Ajude-nos a melhorar a plataforma com suas sugestões e feedback.</p>
-          
-          <form id="contactForm" class="contact-form">
-            <div class="form-group">
-              <label class="form-label">Assunto</label>
-              <input type="text" id="contactSubject" class="form-input" placeholder="Assunto da sua sugestão" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">Sua Sugestão</label>
-              <textarea id="contactMessage" rows="6" class="form-input" placeholder="Descreva sua sugestão de melhoria..." required></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-primary btn-full">
-              <i class="ri-send-plane-line"></i>Enviar Sugestão
-            </button>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-nav">
-      <div class="mobile-nav-grid">
-        <a href="#home" class="mobile-nav-item">
-          <i class="ri-home-line"></i>
-          <span>Início</span>
-        </a>
-        <a href="#produtos" class="mobile-nav-item">
-          <i class="ri-shopping-bag-line"></i>
-          <span>Produtos</span>
-        </a>
-        <a href="#publicar" class="mobile-nav-item">
-          <i class="ri-add-circle-line"></i>
-          <span>Publicar</span>
-        </a>
-        <a href="#perfil" class="mobile-nav-item">
-          <i class="ri-user-line"></i>
-          <span>Perfil</span>
-        </a>
-        <a href="#contato" class="mobile-nav-item">
-          <i class="ri-message-line"></i>
-          <span>Sugestões</span>
-        </a>
-      </div>
-    </nav>
-  </div>
-
-  <!-- Success Modal -->
-  <div id="successModal" class="modal hidden">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="modal-icon">
-          <i class="ri-check-line"></i>
-        </div>
-        <h3 id="modalTitle" class="modal-title">Sucesso!</h3>
-        <p id="modalMessage" class="modal-message">Operação realizada com sucesso!</p>
-        <button onclick="closeModal()" class="btn btn-primary">
-          Fechar
-        </button>
       </div>
     </div>
-  </div>
-
-  <!-- Admin Panel -->
-  <div id="admin-panel" class="admin-panel hidden">
-    <span class="admin-text">ADMIN</span>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    
+    <button id="admin-logout-btn" class="admin-logout-btn hidden"><i class="ri-logout-box-r-line"></i> Sair</button>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
