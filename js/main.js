@@ -73,8 +73,48 @@ function renderAdminPanel() {
     ui.renderAdminUsers(filteredUsers);
 }
 
-async function handleLogin(e) { e.preventDefault(); ui.showLoader(); const email = document.getElementById("loginEmail").value; const password = document.getElementById("loginPassword").value; const success = auth.login(email, password, state.users); if (success) { ui.showMainApp(auth.getCurrentUser().isAdmin); } else { showModal("Erro", "Email ou senha incorretos!", 'successModal'); } ui.hideLoader(); }
-async function handleRegister(e) { e.preventDefault(); ui.showLoader(); const name = document.getElementById("registerName").value.trim(); const email = document.getElementById("registerEmail").value.trim(); const phone = document.getElementById("registerPhone").value; const password = document.getElementById("registerPassword").value; if (state.users.find(u => u.email === email)) { showModal("Erro", "Este email já está cadastrado!", 'successModal'); ui.hideLoader(); return; } const success = await auth.register(name, email, phone, password); if (success) { showModal("Cadastro realizado!", "Bem-vindo ao AgroConnect!", 'successModal'); setTimeout(() => { closeModal('successModal'); ui.showMainApp(false); }, 2000); } else { showModal("Erro", "Não foi possível realizar o cadastro.", 'successModal'); } ui.hideLoader(); }
+async function handleLogin(e) {
+    e.preventDefault();
+    ui.showLoader();
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    const success = auth.login(email, password, state.users);
+    if (success) {
+        ui.showMainApp(auth.getCurrentUser().isAdmin); // <--- Isso já está aqui.
+        // Adicionar uma navegação explícita para 'home' após login
+        navigateTo('home'); // Adicione esta linha para garantir que a seção inicial seja renderizada
+    } else {
+        showModal("Erro", "Email ou senha incorretos!", 'successModal');
+    }
+    ui.hideLoader();
+}
+async function handleRegister(e) {
+    e.preventDefault();
+    ui.showLoader();
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const phone = document.getElementById("registerPhone").value;
+    const password = document.getElementById("registerPassword").value;
+
+    if (state.users.find(u => u.email === email)) {
+        showModal("Erro", "Este email já está cadastrado!", 'successModal');
+        ui.hideLoader();
+        return;
+    }
+
+    const success = await auth.register(name, email, phone, password);
+    if (success) {
+        showModal("Cadastro realizado!", "Bem-vindo ao AgroConnect!", 'successModal');
+        setTimeout(() => {
+            closeModal('successModal');
+            ui.showMainApp(false); // <--- Isso já está aqui.
+            navigateTo('home'); // Adicione esta linha para garantir que a seção inicial seja renderizada
+        }, 2000);
+    } else {
+        showModal("Erro", "Não foi possível realizar o cadastro.", 'successModal');
+    }
+    ui.hideLoader();
+}
 function handleLogout() { auth.logout(); ui.showAuthScreen(); }
 
 async function handlePublishFormSubmit(e) {
@@ -229,7 +269,6 @@ function setupEventListeners() {
 function initializeApp() {
     document.removeEventListener("DOMContentLoaded", initializeApp);
     ui.showLoader();
-    auth.initAuth();
     initializeSettings();
     setupEventListeners();
 

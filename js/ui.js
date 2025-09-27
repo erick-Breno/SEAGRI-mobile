@@ -1,7 +1,9 @@
+// ui.js
+
 import * as components from './components.js';
 
 const sections = document.querySelectorAll(".section-content");
-const loader = document.getElementById('loader');
+// REMOVA ESTA LINHA: const loader = document.getElementById('loader');
 const authScreen = document.getElementById('auth-screen');
 const mainApp = document.getElementById('main-app');
 
@@ -13,18 +15,40 @@ function resetUI() {
     document.querySelector('.desktop-nav .logout-btn').classList.remove('hidden');
 }
 
-export const showLoader = () => loader.classList.remove('hidden');
-export const hideLoader = () => loader.classList.add('hidden');
-export const showSection = (sectionId) => { sections.forEach((s) => s.classList.add("hidden")); const targetSection = document.getElementById(sectionId); if (targetSection) targetSection.classList.remove("hidden"); updateNavigation(sectionId); window.scrollTo({ top: 0, behavior: "smooth" }); };
-
-// --- MODIFICADO: showAuthScreen agora chama resetUI ---
-export const showAuthScreen = () => { 
-    authScreen.classList.remove('hidden'); 
-    mainApp.classList.add('hidden'); 
-    resetUI(); // Garante que a UI volte ao normal
+// MODIFIQUE showLoader e hideLoader para buscar o elemento sempre que necessário
+export const showLoader = () => {
+    const loader = document.getElementById('loader'); // Busca o loader na hora
+    if (loader) loader.classList.remove('hidden');
 };
-export const showMainApp = (isAdmin) => { authScreen.classList.add('hidden'); mainApp.classList.remove('hidden'); if (isAdmin) setupAdminUI(); else setupUserUI(); showSection('home'); };
-export const toggleAuthForm = (formToShow) => { document.getElementById("login-form").classList.toggle("hidden", formToShow === "register"); document.getElementById("register-form").classList.toggle("hidden", formToShow !== "register"); };
+export const hideLoader = () => {
+    const loader = document.getElementById('loader'); // Busca o loader na hora
+    if (loader) loader.classList.add('hidden');
+};
+
+export const showSection = (sectionId) => {
+    sections.forEach((s) => s.classList.add("hidden"));
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) targetSection.classList.remove("hidden");
+    updateNavigation(sectionId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+export const showAuthScreen = () => {
+    authScreen.classList.remove('hidden');
+    mainApp.classList.add('hidden');
+    resetUI();
+};
+export const showMainApp = (isAdmin) => {
+    authScreen.classList.add('hidden');
+    mainApp.classList.remove('hidden');
+    if (isAdmin) setupAdminUI();
+    else setupUserUI();
+    showSection('home');
+};
+export const toggleAuthForm = (formToShow) => {
+    document.getElementById("login-form").classList.toggle("hidden", formToShow === "register");
+    document.getElementById("register-form").classList.toggle("hidden", formToShow !== "register");
+};
 export const resetForm = (formId) => document.getElementById(formId)?.reset();
 
 function renderList(containerId, noContentId, items, createComponentFn, ...args) {
@@ -69,7 +93,14 @@ export const renderUserProducts = (products, onEdit, onDelete) => renderList('us
 export const renderAdminSuggestions = (suggestions, onClick) => renderList('admin-suggestions-list', 'no-admin-suggestions', suggestions, components.createSuggestionCard, true, onClick);
 export const renderUserSuggestions = (suggestions, onClick) => renderList('user-suggestions-list', 'no-user-suggestions', suggestions, components.createSuggestionCard, false, onClick);
 
-export const updateProfileInfo = (user, productCount) => { if (!user) return; document.getElementById("profileName").textContent = user.name || '-'; document.getElementById("profileEmail").textContent = user.email || '-'; document.getElementById("profilePhone").textContent = user.phone || '-'; document.getElementById('profileAvatar').src = user.profilePictureUrl || 'img/default-avatar.png'; document.getElementById("profileProductCount").textContent = productCount; };
+export const updateProfileInfo = (user, productCount) => {
+    if (!user) return;
+    document.getElementById("profileName").textContent = user.name || '-';
+    document.getElementById("profileEmail").textContent = user.email || '-';
+    document.getElementById("profilePhone").textContent = user.phone || '-';
+    document.getElementById('profileAvatar').src = user.profilePictureUrl || 'img/default-avatar.png';
+    document.getElementById("profileProductCount").textContent = productCount;
+};
 
 export const updateUserGallery = (galleryUrls = [], onImageClick) => {
     renderList('user-gallery', 'no-gallery-photos', galleryUrls, (url) => {
@@ -86,8 +117,32 @@ export const renderSellerProfile = (seller, products) => {
     container.innerHTML = '';
     const profileElement = components.createSellerProfile(seller, products);
     container.appendChild(profileElement);
+};
+
+function setupAdminUI() {
+    document.body.classList.add('admin-mode');
+    document.getElementById('admin-logout-btn').classList.remove('hidden');
+    document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll(".user-only-nav").forEach(el => el.classList.add('hidden'));
+    const mobileLink = document.getElementById("mobile-nav-extra-link");
+    mobileLink.href = "#admin-panel";
+    mobileLink.innerHTML = `<i class="ri-shield-user-line"></i><span>Admin</span>`;
+    document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Administrador');
+    document.querySelector('.desktop-nav .logout-btn').classList.add('hidden');
 }
 
-function setupAdminUI() { document.body.classList.add('admin-mode'); document.getElementById('admin-logout-btn').classList.remove('hidden'); document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.remove('hidden')); document.querySelectorAll(".user-only-nav").forEach(el => el.classList.add('hidden')); const mobileLink = document.getElementById("mobile-nav-extra-link"); mobileLink.href = "#admin-panel"; mobileLink.innerHTML = `<i class="ri-shield-user-line"></i><span>Admin</span>`; document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Administrador'); document.querySelector('.desktop-nav .logout-btn').classList.add('hidden'); }
-function setupUserUI() { document.body.classList.remove('admin-mode'); document.getElementById('admin-logout-btn').classList.add('hidden'); document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.add('hidden')); document.querySelectorAll(".user-only-nav").forEach(el => el.classList.remove('hidden')); const mobileLink = document.getElementById("mobile-nav-extra-link"); mobileLink.href = "#notificacoes"; mobileLink.innerHTML = `<i class="ri-notification-3-line"></i><span>Notificações</span>`; document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Açailândia-MA'); document.querySelector('.desktop-nav .logout-btn').classList.remove('hidden'); }
-function updateNavigation(activeId) { document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(link => { link.classList.toggle("nav-active", link.getAttribute("href") === "#" + activeId); }); }
+function setupUserUI() {
+    document.body.classList.remove('admin-mode');
+    document.getElementById('admin-logout-btn').classList.add('hidden');
+    document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll(".user-only-nav").forEach(el => el.classList.remove('hidden'));
+    const mobileLink = document.getElementById("mobile-nav-extra-link");
+    document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Açailândia-MA');
+    document.querySelector('.desktop-nav .logout-btn').classList.remove('hidden');
+}
+
+function updateNavigation(activeId) {
+    document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(link => {
+        link.classList.toggle("nav-active", link.getAttribute("href") === "#" + activeId);
+    });
+}

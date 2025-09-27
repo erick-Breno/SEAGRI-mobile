@@ -6,12 +6,7 @@ import * as api from './api.js';
 let currentUser = null;
 
 // Função para carregar o usuário do localStorage ao iniciar o app
-export const initAuth = () => {
-  const savedUser = localStorage.getItem("currentUser");
-  if (savedUser) {
-    currentUser = JSON.parse(savedUser);
-  }
-};
+
 
 // Getter para acessar o usuário atual de forma segura
 export const getCurrentUser = () => currentUser;
@@ -21,7 +16,6 @@ export const login = (email, password, allUsers) => {
   // Lógica de Admin (ainda client-side, mas agora isolada)
   if (email === "admin@agroconnect.com" && password === "admin123") {
     currentUser = { id: "admin", name: "Administrador", email: email, isAdmin: true };
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
     return true;
   }
 
