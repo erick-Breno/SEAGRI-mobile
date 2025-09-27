@@ -41,7 +41,21 @@
     </div>
 
     <div id="main-app" class="hidden">
-      <nav class="desktop-nav"><div class="nav-container"><div class="nav-content"><div class="nav-brand"><span class="brand-name">AgroConnect</span><span class="brand-location">Açailândia-MA</span></div><div class="nav-links"><a href="#home" class="nav-link">Início</a><a href="#produtos" class="nav-link">Produtos</a><a href="#publicar" class="nav-link">Publicar</a><a href="#perfil" class="nav-link">Perfil</a><a href="#contato" class="nav-link user-only-nav">Enviar Sugestão</a><a href="#admin-panel" class="nav-link admin-only-nav hidden"><i class="ri-shield-user-line"></i> Admin</a>
+      <nav class="desktop-nav">
+        <div class="nav-container">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <span class="brand-name">AgroConnect</span>
+            <span class="brand-location">Açailândia-MA</span>
+          </div>
+          <div class="nav-links">
+            <a href="#home" class="nav-link">Início</a>
+            <a href="#produtos" class="nav-link">Produtos</a>
+            <a href="#publicar" class="nav-link">Publicar</a>
+            <a href="#perfil" class="nav-link">Perfil</a>
+            <a href="#contato" id= "mobile-suggestion-btn" class="nav-link user-only-nav">Enviar Sugestão</a>
+            <a href="#admin-panel" class="nav-link admin-only-nav hidden">
+              <i class="ri-shield-user-line"> </i> Admin</a>
       <!-- BOTÃO MODIFICADO ABAIXO (REMOVIDO O TEXTO 'Sair') -->
       <button id="logoutBtn" class="logout-btn"><i class="ri-logout-circle-line"></i></button></div></div></div></nav>
       <header class="mobile-header"><div class="mobile-header-content"><div class="mobile-brand"><span class="brand-name">AgroConnect</span><span class="mobile-brand-location">Açailândia-MA</span></div><button id="mobileLogoutBtn" class="mobile-logout-btn" aria-label="Sair"><i class="ri-logout-circle-line"></i></button></div></header>
@@ -96,7 +110,12 @@
               
             </div>
           </section>
-        <section id="admin-panel" class="section-content hidden"><div class="section-container"><h2><i class="ri-shield-user-line"></i> Painel do Administrador</h2><div class="admin-tabs"><button class="admin-tab-btn active" data-tab="users">Usuários</button><button class="admin-tab-btn" data-tab="suggestions">Sugestões</button></div><div id="admin-users-content" class="admin-tab-content"><div class="admin-user-filters"><button class="admin-user-filter-btn active" data-filter="all">Todos</button><button class="admin-user-filter-btn" data-filter="with-products">Com Produtos</button><button class="admin-user-filter-btn" data-filter="without-products">Sem Produtos</button></div><div id="admin-users-list" class="admin-users-list"></div><div id="no-admin-users" class="no-content hidden"><h3>Nenhum usuário encontrado</h3></div></div><div id="admin-suggestions-content" class="admin-tab-content hidden"><h2><i class="ri-inbox-line"></i> Sugestões Recebidas</h2><div id="admin-suggestions-list" class="suggestions-list"></div><div id="no-admin-suggestions" class="no-content hidden"><i class="ri-mail-unread-line"></i><h3>Nenhuma sugestão recebida</h3></div></div></div></section>
+        <section id="admin-panel" class="section-content hidden"><div class="section-container"><h2><i class="ri-shield-user-line"></i> Painel do Administrador</h2><div class="admin-tabs"><button class="admin-tab-btn active" data-tab="users">Usuários</button>
+          <button class="admin-tab-btn" data-tab="suggestions">Sugestões</button>
+        </div><div id="admin-users-content" class="admin-tab-content">
+          <div class="admin-user-filters">
+            <button class="admin-user-filter-btn active" data-filter="all">Todos</button>
+            <button class="admin-user-filter-btn" data-filter="with-products">Com Produtos</button><button class="admin-user-filter-btn" data-filter="without-products">Sem Produtos</button></div><div id="admin-users-list" class="admin-users-list"></div><div id="no-admin-users" class="no-content hidden"><h3>Nenhum usuário encontrado</h3></div></div><div id="admin-suggestions-content" class="admin-tab-content hidden"><h2><i class="ri-inbox-line"></i> Sugestões Recebidas</h2><div id="admin-suggestions-list" class="suggestions-list"></div><div id="no-admin-suggestions" class="no-content hidden"><i class="ri-mail-unread-line"></i><h3>Nenhuma sugestão recebida</h3></div></div></div></section>
       </main>
 
       <nav class="mobile-nav">

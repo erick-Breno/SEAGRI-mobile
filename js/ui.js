@@ -121,25 +121,43 @@ export const renderSellerProfile = (seller, products) => {
 
 function setupAdminUI() {
     document.body.classList.add('admin-mode');
-    document.getElementById('admin-logout-btn').classList.remove('hidden');
+
+    // Esconder botão de sugestão mobile
+    const mobileSuggestionBtn = document.getElementById('mobile-suggestion-btn');
+    if (mobileSuggestionBtn) mobileSuggestionBtn.style.display = 'none';
+
+    // Ajustes de nav/admin
+    document.getElementById('admin-logout-btn')?.classList.remove('hidden');
     document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.remove('hidden'));
     document.querySelectorAll(".user-only-nav").forEach(el => el.classList.add('hidden'));
+
     const mobileLink = document.getElementById("mobile-nav-extra-link");
-    mobileLink.href = "#admin-panel";
-    mobileLink.innerHTML = `<i class="ri-shield-user-line"></i><span>Admin</span>`;
+    if (mobileLink) {
+        mobileLink.href = "#admin-panel";
+        mobileLink.innerHTML = `<i class="ri-shield-user-line"></i><span>Admin</span>`;
+    }
+
     document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Administrador');
-    document.querySelector('.desktop-nav .logout-btn').classList.add('hidden');
+    document.querySelector('.desktop-nav .logout-btn')?.classList.add('hidden');
 }
+
 
 function setupUserUI() {
     document.body.classList.remove('admin-mode');
-    document.getElementById('admin-logout-btn').classList.add('hidden');
+
+    // Mostrar botão de sugestão mobile
+    const mobileSuggestionBtn = document.getElementById('mobile-suggestion-btn');
+    if (mobileSuggestionBtn) mobileSuggestionBtn.style.display = 'flex'; // ou 'block', dependendo do CSS
+
+    document.getElementById('admin-logout-btn')?.classList.add('hidden');
     document.querySelectorAll(".admin-only-nav").forEach(el => el.classList.add('hidden'));
     document.querySelectorAll(".user-only-nav").forEach(el => el.classList.remove('hidden'));
-    const mobileLink = document.getElementById("mobile-nav-extra-link");
+
     document.querySelectorAll('.brand-location').forEach(el => el.textContent = 'Açailândia-MA');
-    document.querySelector('.desktop-nav .logout-btn').classList.remove('hidden');
+    document.querySelector('.desktop-nav .logout-btn')?.classList.remove('hidden');
 }
+
+
 
 function updateNavigation(activeId) {
     document.querySelectorAll(".nav-link, .mobile-nav-item").forEach(link => {

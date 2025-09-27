@@ -1,4 +1,4 @@
-// js/settings.js
+
 
 const themes = { green: '#22c55e', blue: '#3b82f6', orange: '#f97316', purple: '#8b5cf6', yellow: '#eab308' };
 const fontSizes = { sm: 'Pequeno', md: 'Médio', lg: 'Grande' };

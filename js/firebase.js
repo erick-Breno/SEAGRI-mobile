@@ -8,8 +8,5 @@ const firebaseConfig = {
   appId: "1:766760612862:web:f379c05faaa46a09ec46af"
 };
 
-// Inicializa o Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Exporta a instância do banco de dados para que outros módulos possam usá-la
 export const db = firebase.database();

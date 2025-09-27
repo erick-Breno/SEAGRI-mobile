@@ -1,19 +1,8 @@
-// js/auth.js
-
 import * as api from './api.js';
 
-// O estado do usuário atual é privado para este módulo
 let currentUser = null;
-
-// Função para carregar o usuário do localStorage ao iniciar o app
-
-
-// Getter para acessar o usuário atual de forma segura
 export const getCurrentUser = () => currentUser;
-
-// Função de Login
 export const login = (email, password, allUsers) => {
-  // Lógica de Admin (ainda client-side, mas agora isolada)
   if (email === "admin@agroconnect.com" && password === "admin123") {
     currentUser = { id: "admin", name: "Administrador", email: email, isAdmin: true };
     return true;
@@ -34,7 +23,7 @@ export const login = (email, password, allUsers) => {
 export const register = async (name, email, phone, password) => {
   const newUser = { name, email, phone, password, isAdmin: false };
   try {
-    await api.saveNewUser(newUser); // A API já adiciona o ID
+    await api.saveNewUser(newUser);
     currentUser = newUser;
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
     return true;
@@ -44,13 +33,11 @@ export const register = async (name, email, phone, password) => {
   }
 };
 
-// Função de Logout
 export const logout = () => {
   currentUser = null;
   localStorage.removeItem("currentUser");
 };
 
-// Atualiza os dados do usuário logado na sessão atual
 export const updateCurrentUserData = (newData) => {
     if (currentUser) {
         currentUser = { ...currentUser, ...newData };
