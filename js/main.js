@@ -67,8 +67,10 @@ function renderAdminPanel() {
     
     ui.renderAdminUsers(filteredUsers);
 }
+async function handleContactForm(e) { e.preventDefault(); ui.showLoader(); const user = auth.getCurrentUser(); const newSuggestion = { userId: user.id, subject: document.getElementById("contactSubject").value.trim(), message: document.getElementById("contactMessage").value.trim(), userName: user.name, userEmail: user.email, createdAt: new Date().toISOString(), status: 'pending', reply: '' }; try { await api.saveNewSuggestion(newSuggestion); ui.resetForm("contactForm"); showModal("Sugestão Enviada!", "Obrigado! Acompanhe a resposta na aba de Notificações.", 'successModal'); navigateTo('notificacoes'); } catch(err) { showModal("Erro", "Não foi possível enviar a sugestão.", 'successModal'); } finally { ui.hideLoader(); } }
 
 async function handleLogin(e) { e.preventDefault(); ui.showLoader(); const email = document.getElementById("loginEmail").value; const password = document.getElementById("loginPassword").value; const success = auth.login(email, password, state.users); if (success) { ui.showMainApp(auth.getCurrentUser().isAdmin); navigateTo('home'); } else { showModal("Erro", "Email ou senha incorretos!", 'successModal'); } ui.hideLoader(); }
+
 async function handleRegister(e) { e.preventDefault(); ui.showLoader(); const name = document.getElementById("registerName").value.trim(); const email = document.getElementById("registerEmail").value.trim(); const phone = document.getElementById("registerPhone").value; const password = document.getElementById("registerPassword").value; if (state.users.find(u => u.email === email)) { showModal("Erro", "Este email já está cadastrado!", 'successModal'); ui.hideLoader(); return; } const success = await auth.register(name, email, phone, password); if (success) { showModal("Cadastro realizado!", "Bem-vindo ao AgroConnect!", 'successModal'); setTimeout(() => { closeModal('successModal'); ui.showMainApp(false); navigateTo('home'); }, 2000); } else { showModal("Erro", "Não foi possível realizar o cadastro.", 'successModal'); } ui.hideLoader(); }
 function handleLogout() { auth.logout(); ui.showAuthScreen(); }
 
@@ -219,6 +221,8 @@ function setupEventListeners() {
     document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.addEventListener('click', () => handleAdminTabClick(btn.dataset.tab)));
     document.querySelectorAll('.admin-user-filter-btn').forEach(btn => btn.addEventListener('click', () => handleAdminUserFilterClick(btn.dataset.filter)));
     
+    document.getElementById('contactForm')?.addEventListener('submit', handleContactForm);
+    
     ['logoutBtn', 'mobileLogoutBtn', 'admin-logout-btn', 'profileLogoutBtn'].forEach(id => { document.getElementById(id)?.addEventListener("click", handleLogout); });
     document.getElementById('showRegister')?.addEventListener('click', () => ui.toggleAuthForm('register'));
     document.getElementById('showLogin')?.addEventListener('click', () => ui.toggleAuthForm('login'));
@@ -289,5 +293,6 @@ function initializeApp() {
     }
     ui.hideLoader();
 }
+
 
 document.addEventListener("DOMContentLoaded", initializeApp);
