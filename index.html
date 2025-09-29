@@ -45,7 +45,7 @@
         <div class="nav-container">
         <div class="nav-content">
           <div class="nav-brand">
-            <span class="brand-name">AgroConnect</span>
+            <span class="brand-name">S E A G R I</span>
             <span class="brand-location">Açailândia-MA</span>
           </div>
           <div class="nav-links">
@@ -56,14 +56,13 @@
             <a href="#contato" id= "mobile-suggestion-btn" class="nav-link user-only-nav">Enviar Sugestão</a>
             <a href="#admin-panel" class="nav-link admin-only-nav hidden">
               <i class="ri-shield-user-line"> </i> Admin</a>
-      <!-- BOTÃO MODIFICADO ABAIXO (REMOVIDO O TEXTO 'Sair') -->
       <button id="logoutBtn" class="logout-btn"><i class="ri-logout-circle-line"></i></button></div></div></div></nav>
       <header class="mobile-header"><div class="mobile-header-content"><div class="mobile-brand"><span class="brand-name">AgroConnect</span><span class="mobile-brand-location">Açailândia-MA</span></div><button id="mobileLogoutBtn" class="mobile-logout-btn" aria-label="Sair"><i class="ri-logout-circle-line"></i></button></div></header>
       
       <main class="main-content">
         <section id="home" class="section-content"><div class="hero-section"><div class="hero-overlay"></div><div class="hero-content"><h1 class="font-pacifico">Conectando Produtores de Açailândia</h1><p>A plataforma para agricultores da região anunciarem e venderem seus produtos.</p><button onclick="showSection('publicar')" class="btn btn-primary btn-hero">Anunciar Produto</button></div></div><div class="featured-section"><div class="featured-container"><h2><i class="ri-star-smile-line"></i> Produtos em Destaque</h2><div id="featured-products" class="featured-grid"></div><div id="no-featured-products" class="no-content hidden"><i class="ri-star-line"></i><h3>Nenhum produto em destaque</h3><button onclick="showSection('publicar')" class="btn btn-primary">Seja o primeiro a publicar</button></div><div class="featured-actions"><button onclick="showSection('produtos')" class="btn btn-secondary">Ver Todos os Produtos</button></div></div></div><div class="stats-section"><div class="stats-container"><div class="stats-grid"><div class="stat-item"><div class="stat-icon"><i class="ri-leaf-line"></i></div><h3>Agricultura Local</h3></div><div class="stat-item"><div class="stat-icon"><i class="ri-group-line"></i></div><h3>Comunidade Forte</h3></div><div class="stat-item"><div class="stat-icon"><i class="ri-shield-check-line"></i></div><h3>Qualidade Garantida</h3></div></div></div></div></section>
-        <section id="produtos" class="section-content hidden"><div class="section-container"><h2><i class="ri-shopping-bag-3-line"></i> Produtos Disponíveis</h2><div class="filters-container"><button class="filter-btn filter-active" data-filter="todos">Todos</button><button class="filter-btn" data-filter="hortalicas">Hortaliças</button><button class="filter-btn" data-filter="frutas">Frutas</button><button class="filter-btn" data-filter="laticinios">Laticínios</button><button class="filter-btn" data-filter="graos">Grãos</button></div><div id="products-grid" class="products-grid"></div><div id="no-products" class="no-content hidden"><i class="ri-shopping-bag-line"></i><h3>Nenhum produto encontrado</h3><button onclick="showSection('publicar')" class="btn btn-primary">Anunciar um Produto</button></div></div></section>
-        <section id="publicar" class="section-content hidden"><div class="form-container"><h2 id="publish-form-title"><i class="ri-add-circle-line"></i> Anunciar Novo Produto</h2><form id="publishForm" class="publish-form" data-mode="new" data-product-id=""><div class="form-row"><div class="form-group"><label for="productName">Nome do Produto</label><input type="text" id="productName" placeholder="Ex: Tomate Orgânico" required/></div><div class="form-group"><label for="productCategory">Categoria</label><select id="productCategory" required><option value="" disabled selected>Selecione</option><option value="hortalicas">Hortaliças</option><option value="frutas">Frutas</option><option value="laticinios">Laticínios</option><option value="graos">Grãos</option></select></div></div><div class="form-row"><div class="form-group"><label for="productPrice">Preço (Ex: 10,50)</label><input type="text" id="productPrice" placeholder="Apenas números e vírgula" required/></div><div class="form-group"><label for="productPhone">Whatsapp para contato</label><input type="tel" id="productPhone" placeholder="(99) 90000-0000" required/></div></div><div class="form-group"><label for="productDescription">Descrição do Produto</label><textarea id="productDescription" rows="4" placeholder="Fale um pouco sobre seu produto, como foi cultivado, etc."></textarea></div><div class="form-group"><label for="productImage">URL da Imagem</label><input type="url" id="productImage" placeholder="https://exemplo.com/imagem.jpg"/><p class="form-help">Link de uma imagem online do produto</p></div><button type="submit" class="btn btn-primary btn-full" id="publish-form-submit-btn"><i class="ri-send-plane-fill"></i> Publicar Anúncio</button></form></div></section>
+        <section id="produtos" class="section-content hidden"><div class="section-container"><h2><i class="ri-shopping-bag-3-line"></i> Produtos Disponíveis</h2><div class="search-bar-container"><input type="search" id="product-search-input" placeholder="&#x1F50D; Pesquisar por nome do produto..." /></div><div class="filters-container"><button class="filter-btn filter-active" data-filter="todos">Todos</button><button class="filter-btn" data-filter="hortalicas">Hortaliças</button><button class="filter-btn" data-filter="frutas">Frutas</button><button class="filter-btn" data-filter="laticinios">Laticínios</button><button class="filter-btn" data-filter="graos">Grãos</button></div><div id="products-grid" class="products-grid"></div><div id="no-products" class="no-content hidden"><i class="ri-shopping-bag-line"></i><h3>Nenhum produto encontrado</h3><button onclick="showSection('publicar')" class="btn btn-primary">Anunciar um Produto</button></div></div></section>
+        <section id="publicar" class="section-content hidden"><div class="form-container"><h2 id="publish-form-title"><i class="ri-add-circle-line"></i> Anunciar Novo Produto</h2><form id="publishForm" class="publish-form" data-mode="new" data-product-id=""><div class="form-row"><div class="form-group"><label for="productName">Nome do Produto</label><input type="text" id="productName" placeholder="Ex: Tomate Orgânico" required/></div><div class="form-group"><label for="productCategory">Categoria</label><select id="productCategory" required><option value="" disabled selected>Selecione</option><option value="hortalicas">Hortaliças</option><option value="frutas">Frutas</option><option value="laticinios">Laticínios</option><option value="graos">Grãos</option></select></div></div><div class="form-row"><div class="form-group"><label for="productPrice">Preço (Ex: 10,50)</label><input type="text" id="productPrice" placeholder="Apenas números e vírgula" required/></div><div class="form-group"><label for="productPhone">Whatsapp para contato</label><input type="tel" id="productPhone" placeholder="(99) 90000-0000" required/></div></div><div class="form-group"><label for="productDescription">Descrição do Produto</label><textarea id="productDescription" rows="4" placeholder="Fale um pouco sobre seu produto, como foi cultivado, etc."></textarea></div><div class="form-group"><label>Imagem do Produto</label><button type="button" class="btn btn-secondary" id="selectProductImageBtn"><i class="ri-image-add-line"></i> Selecionar Imagem</button><div class="file-info" id="productImageInfo">Nenhuma imagem selecionada.</div></div><button type="submit" class="btn btn-primary btn-full" id="publish-form-submit-btn"><i class="ri-send-plane-fill"></i> Publicar Anúncio</button></form></div></section>
         <section id="perfil" class="section-content hidden"><div class="section-container"><div class="profile-card"><div class="profile-header"><div class="profile-avatar-wrapper"><img id="profileAvatar" src="img/default-avatar.png" alt="Foto do Perfil" class="profile-avatar"/></div><div class="profile-header-info"><h2><i class="ri-user-line"></i> <span id="profileName">-</span></h2><p id="profileEmail" class="profile-email-display">-</p></div><div class="profile-header-actions"><button onclick="openEditProfileModal()" class="btn btn-secondary"><i class="ri-edit-2-line"></i> Editar Perfil</button><button onclick="showSection('configuracoes')" class="btn btn-secondary"><i class="ri-settings-3-line"></i></button><button id="profileLogoutBtn" class="btn btn-danger"><i class="ri-logout-box-line"></i> Sair</button></div></div><div class="profile-info"><div class="profile-item"><p>Telefone:</p><p id="profilePhone">-</p></div><div class="profile-item"><p>Produtos à Venda:</p><p id="profileProductCount">0</p></div></div></div><div id="user-gallery-section"><h3><i class="ri-camera-lens-line"></i> Minha Galeria</h3><div id="user-gallery" class="gallery-grid"></div><div id="no-gallery-photos" class="no-content hidden"><i class="ri-gallery-line"></i><h3>Nenhuma foto na galeria</h3><p>Adicione fotos da sua horta ou fazenda para os clientes conhecerem seu trabalho!</p><button onclick="openEditProfileModal()" class="btn btn-primary">Adicionar Fotos</button></div></div><h3>Meus Produtos à Venda</h3><div id="user-products" class="products-grid"></div><div id="no-user-products" class="no-content hidden"><i class="ri-shopping-bag-line"></i><h3>Você não tem produtos à venda</h3><button onclick="showSection('publicar')" class="btn btn-primary">Anunciar Primeiro Produto</button></div></div></section>
         <section id="seller-profile" class="section-content hidden"><div class="section-container" id="seller-profile-content"></div></section>
         <section id="configuracoes" class="section-content hidden"><div class="section-container"><h2><i class="ri-settings-3-line"></i> Configurações</h2><div class="settings-card"><h3><i class="ri-palette-line"></i> Paleta de Cores</h3><div id="theme-selector" class="theme-selector"></div></div><div class="settings-card"><h3><i class="ri-font-size"></i> Tamanho do Texto</h3><div id="font-size-selector" class="font-size-selector"></div></div></div></section>
@@ -89,7 +88,6 @@
               </form>
             </div>
             
-            <!-- Histórico de Sugestões do Usuário -->
             <div class="section-container">
               <h2>
                 <i class="ri-history-line"></i> 
@@ -98,7 +96,6 @@
               <p class="text-center text-gray-400 mb-6">Acompanhe suas sugestões enviadas e suas respostas</p>
               
               <div id="user-suggestions-list" class="suggestions-list">
-                <!-- Sugestões do usuário serão carregadas aqui -->
               </div><div id="no-user-suggestions" class="no-content hidden">
                 <i class="ri-chat-history-line"></i>
                 <h3>Nenhuma sugestão enviada</h3>
@@ -124,22 +121,18 @@
             <i class="ri-home-line"></i>
             <span>Início</span>
           </a>
-          
           <a href="#produtos" class="mobile-nav-item">
             <i class="ri-shopping-bag-line"></i>
             <span>Produtos</span>
           </a>
-          
           <a href="#publicar" class="mobile-nav-item">
             <i class="ri-add-circle-line"></i>
             <span>Publicar</span>
           </a>
-          
           <a href="#perfil" class="mobile-nav-item">
             <i class="ri-user-line"></i>
             <span>Perfil</span>
           </a>
-          
           <a href="#contato" class="mobile-nav-item">
             <i class="ri-message-line"></i>
             <span>Sugestões</span>
@@ -164,18 +157,41 @@
           <form id="editProfileForm">
             <div class="form-group"><label for="editProfileName">Nome Completo</label><input type="text" id="editProfileName" required /></div>
             <div class="form-group"><label for="editProfilePhone">Telefone</label><input type="tel" id="editProfilePhone" required /></div>
-            <div class="form-group"><label for="editProfilePicture">URL da Foto de Perfil</label><input type="url" id="editProfilePicture" placeholder="https://exemplo.com/foto.jpg" /></div>
-            <div class="form-group"><label for="editProfileGallery">URLs da Galeria (uma por linha)</label><textarea id="editProfileGallery" rows="4" placeholder="https://exemplo.com/foto1.jpg\nhttps://exemplo.com/foto2.jpg"></textarea></div>
+            <div class="form-group"><label>Foto de Perfil</label><button type="button" class="btn btn-secondary" id="selectProfilePictureBtn"><i class="ri-image-add-line"></i> Alterar Foto</button><div class="file-info" id="profilePictureInfo">Nenhuma nova foto selecionada.</div></div>
+            <div class="form-group"><label>Fotos da Galeria</label><button type="button" class="btn btn-secondary" id="selectGalleryBtn"><i class="ri-gallery-add-line"></i> Adicionar Fotos</button><div class="file-info" id="galleryInfo">Nenhuma foto selecionada.</div></div>
             <button type="submit" class="btn btn-primary btn-full">Salvar Alterações</button>
           </form>
         </div>
       </div>
     </div>
     
+    <div id="imageUploadModal" class="modal hidden">
+      <div class="modal-content image-upload-modal-content">
+        <div class="modal-header">
+          <h3 id="imageUploadTitle">Selecionar Imagens</h3>
+          <button class="close-btn close-modal-btn" data-modal-id="imageUploadModal"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="modal-body">
+          <div id="image-drop-zone" class="image-drop-zone">
+            <p><i class="ri-upload-cloud-2-line"></i></p>
+            <p>Arraste e solte as imagens aqui ou</p>
+            <button type="button" class="btn btn-secondary" id="triggerImageUpload">Escolher Arquivos</button>
+          </div>
+          <div id="image-preview-grid" class="image-preview-grid"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary close-modal-btn" data-modal-id="imageUploadModal">Cancelar</button>
+          <button id="confirmImageSelectionBtn" class="btn btn-primary">Confirmar</button>
+        </div>
+        <input type="file" id="hiddenFileInput" class="hidden" accept="image/*">
+      </div>
+    </div>
+
     <button id="admin-logout-btn" class="admin-logout-btn hidden"><i class="ri-logout-box-r-line"></i> Sair</button>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
     <script type="module" src="js/main.js"></script>
   </body>
 </html>

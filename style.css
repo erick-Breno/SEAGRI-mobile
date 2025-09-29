@@ -7,7 +7,6 @@
 :root {
   --primary-color: #22c55e;
   --primary-hover: #16a34a;
-  --accent-color: #84cc16;
   --danger-color: #dc2626;
 
   --gray-900: #0d1117;
@@ -267,7 +266,8 @@ body.theme-yellow .btn-primary:hover {
   color: var(--gray-400);
 }
 
-.form-help { font-size: 0.8rem; color: var(--gray-400); margin-top: 4px; }
+.form-help, .file-info { font-size: 0.8rem; color: var(--gray-400); margin-top: 8px; }
+.file-info { background-color: var(--gray-900); padding: 8px 12px; border-radius: var(--border-radius); border: 1px solid var(--gray-700); }
 
 .form-row {
   display: grid;
@@ -518,7 +518,7 @@ h3 { font-size: 1.25rem; }
 /* Stats */
 .stats-section {
   padding: 4rem 2rem;
-  background: linear-gradient(45deg, var(--gray-800), #1a2e1a);
+  background: var(--gray-800);
   border-radius: var(--border-radius-lg);
 }
 
@@ -532,7 +532,7 @@ h3 { font-size: 1.25rem; }
 .stat-icon {
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -542,11 +542,28 @@ h3 { font-size: 1.25rem; }
   box-shadow: 0 0 20px rgba(132, 204, 22, 0.4);
 }
 
+body.theme-blue .stat-icon { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+body.theme-orange .stat-icon { box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
+body.theme-purple .stat-icon { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+body.theme-yellow .stat-icon { box-shadow: 0 0 20px rgba(234, 179, 8, 0.4); }
+
 .stat-icon i { font-size: 1.5rem; }
 
 /* ---------------------------
    Filters / product cards
    --------------------------- */
+.search-bar-container {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+#product-search-input {
+  font-size: 1.1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 99px;
+  text-align: center;
+}
+
 .filters-container {
   display: flex;
   flex-wrap: wrap;
@@ -564,11 +581,16 @@ h3 { font-size: 1.25rem; }
 
 .filter-btn:hover,
 .filter-btn.filter-active {
-  background-color: var(--accent-color);
+  background-color: var(--primary-color);
   color: var(--white);
   transform: translateY(0);
-  box-shadow: 0 0 15px rgba(132, 204, 22, 0.3);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
 }
+
+body.theme-blue .filter-btn.filter-active { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+body.theme-orange .filter-btn.filter-active { box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); }
+body.theme-purple .filter-btn.filter-active { box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
+body.theme-yellow .filter-btn.filter-active { box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
 
 .product-card {
   background-color: var(--gray-800);
@@ -631,7 +653,7 @@ body.theme-yellow .product-card:hover {
 }
 
 .product-content .price {
-  color: var(--accent-color);
+  color: var(--primary-color);
   font-weight: 700;
   font-size: 1.25rem;
   margin-top: auto;
@@ -770,13 +792,8 @@ body.theme-yellow .product-card:hover {
   justify-content: center;
   margin: 0 auto 1rem;
   color: var(--white);
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
-}
-
-.modal-icon.profit-icon {
-  background: linear-gradient(135deg, #10b981, #059669);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .modal-icon.warning-icon {
@@ -804,13 +821,12 @@ body.theme-yellow .product-card:hover {
 .user-suggestion-card:hover {
   background-color: var(--gray-700);
   transform: translateY(-2px);
-  border-left-color: var(--accent-color);
+  border-left-color: var(--primary-color);
 }
 
 .suggestion-card-item.replied,
 .user-suggestion-card.replied { border-left-color: var(--primary-color); }
 
-.suggestion-card-header,
 .suggestion-meta-info {
   display: flex;
   justify-content: space-between;
@@ -838,12 +854,13 @@ body.theme-yellow .product-card:hover {
 /* ---------------------------
    Modal actions / suggestion details
    --------------------------- */
-.modal-actions {
+.modal-actions, .modal-footer {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 1.5rem;
 }
+.modal-actions { justify-content: center; }
 
 .suggestion-modal-content,
 #editProfileModal .modal-content { max-width: 600px; }
@@ -1103,4 +1120,70 @@ body.theme-yellow .admin-user-filter-btn.active {
   font-size: 0.9rem;
   color: var(--gray-400);
   word-break: break-all;
+}
+
+/* ---------------------------
+   Image Upload Modal
+   --------------------------- */
+.image-upload-modal-content {
+  max-width: 800px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+.image-upload-modal-content .modal-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  text-align: left;
+}
+.image-drop-zone {
+  border: 2px dashed var(--gray-600);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.image-drop-zone:hover, .image-drop-zone.dragover {
+  border-color: var(--primary-color);
+  background-color: var(--gray-700);
+}
+.image-drop-zone i {
+  font-size: 3rem;
+  color: var(--gray-400);
+}
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.preview-item {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid var(--gray-700);
+}
+.preview-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+.preview-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
