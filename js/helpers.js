@@ -25,7 +25,15 @@ export const parsePrice = (priceString) => {
   return parseFloat(cleanedString) || 0;
 };
 
+export const formatPrice = (value) => {
+  if (isNaN(value)) return "R$ 0,00";
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(value);
+};
+
 // Formata data para o padrão brasileiro
 export const formatDate = (isoString) => {
-    return new Date(isoString).toLocaleDateString('pt-BR');
+  return new Date(isoString).toLocaleDateString("pt-BR");
 };
