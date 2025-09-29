@@ -313,7 +313,7 @@ function initializeApp() {
 
     api.onProductsChange(snapshot => refreshDataAndRender(snapshot, 'products'));
     api.onUsersChange(snapshot => refreshDataAndRender(snapshot, 'users'));
-    pi.onSuggestionsChange(snapshot => refreshDataAndRender(snapshot, 'suggestions'));
+    api.onSuggestionsChange(snapshot => refreshDataAndRender(snapshot, 'suggestions'));
 
     const currentUser = auth.getCurrentUser();
     if (currentUser) { 
@@ -326,4 +326,5 @@ function initializeApp() {
 
 
 document.addEventListener("DOMContentLoaded", initializeApp);
+
 
