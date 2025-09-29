@@ -43,9 +43,16 @@ function renderCurrentSection() {
                 ui.renderUserProducts(userProducts, openEditProductForm, openDeleteProductConfirm);
             }
             break;
-        case 'admin-panel':
-            if (user && user.isAdmin) renderAdminPanel();
+        case 'notificacoes':
+            if (user && !user.isAdmin) {
+                const userSuggestions = state.suggestions.filter(s => s.userId === user.id);
+                ui.renderUserSuggestions(userSuggestions, openSuggestionModal);
+            }
             break;
+        case 'admin-panel':
+            if (user && user.isAdmin) {
+                renderAdminPanel();
+            }
     }
 }
 
@@ -205,11 +212,34 @@ function resetEditProfileForm() {
     document.getElementById('galleryInfo').textContent = "Nenhuma foto selecionada.";
 }
 
-function openDeleteProductConfirm(productId) { /* ... (código existente sem alteração) ... */ }
-function openGalleryModal(imageUrl) { /* ... (código existente sem alteração) ... */ }
+function openDeleteProductConfirm(productId) {
+    const product = state.products.find(p => p.id === productId);
+    if (!product) return;
+    const modal = document.getElementById('confirmModal');
+    modal.querySelector('#confirmModalTitle').textContent = 'Excluir Produto?';
+    modal.querySelector('#confirmModalText').textContent = `Você tem certeza que deseja excluir o produto "${product.name}"? Esta ação não pode ser desfeita.`;
+    modal.querySelector('#confirmModalBtn').onclick = async () => {
+        ui.showLoader();
+        try {
+            await api.deleteProduct(productId);
+            showModal('Sucesso', 'Produto excluído com sucesso.', 'successModal');
+        } catch (error) {
+            showModal('Erro', 'Não foi possível excluir o produto.', 'successModal');
+        } finally {
+            closeModal('confirmModal');
+            ui.hideLoader();
+        }
+    };
+    modal.classList.remove('hidden');
+}
+function openGalleryModal(imageUrl) {
+    document.getElementById('galleryModalImage').src = imageUrl;
+    document.getElementById('galleryModal').classList.remove('hidden');
+}
+window.openGalleryModal = openGalleryModal;
 function openEditProfileModal() { const user = auth.getCurrentUser(); if (!user) return; resetEditProfileForm(); document.getElementById('editProfileName').value = user.name || ''; document.getElementById('editProfilePhone').value = user.phone || ''; document.getElementById('editProfileModal').classList.remove('hidden'); }
-function openSuggestionModal(suggestionId) { /* ... (código existente sem alteração) ... */ }
 
+function openSuggestionModal(suggestionId) { const suggestion = state.suggestions.find(s => s.id === suggestionId); if (!suggestion) return; const user = auth.getCurrentUser(); const modal = document.getElementById('suggestionModal'); document.getElementById('modalSuggestionSubject').textContent = suggestion.subject; document.getElementById('modalSuggestionUser').textContent = suggestion.userName; document.getElementById('modalSuggestionEmail').textContent = suggestion.userEmail; document.getElementById('modalSuggestionDate').textContent = new Date(suggestion.createdAt).toLocaleString('pt-BR'); document.getElementById('modalSuggestionMessage').textContent = suggestion.message; const replyBox = document.getElementById('existingReply'); const replyTitle = document.getElementById('replyBoxTitle'); const replyTextEl = document.getElementById('existingReplyText'); if (suggestion.status === 'replied') { replyTitle.textContent = "Resposta do Administrador:"; replyTextEl.textContent = suggestion.reply; replyBox.classList.remove('hidden'); } else { if (!user.isAdmin) { replyTitle.textContent = "Status:"; replyTextEl.textContent = "Sua sugestão foi recebida e está aguardando uma resposta."; replyBox.classList.remove('hidden'); } else { replyBox.classList.add('hidden'); } } const adminSections = modal.querySelectorAll('.admin-only'); if (user && user.isAdmin) { adminSections.forEach(el => el.style.display = 'block'); const replyTextarea = document.getElementById('modalSuggestionReply'); replyTextarea.value = suggestion.reply || ''; replyTextarea.placeholder = suggestion.status === 'replied' ? "Alterar resposta..." : "Digite sua resposta aqui..."; document.getElementById('sendReplyBtn').onclick = async () => { const replyContent = replyTextarea.value; if (!replyContent.trim()) return alert("A resposta não pode estar vazia."); ui.showLoader(); await api.sendSuggestionReply(suggestionId, replyContent); ui.hideLoader(); closeModal('suggestionModal'); showModal('Resposta Enviada', 'Sua resposta foi salva com sucesso.', 'successModal'); }; document.getElementById('deleteSuggestionBtn').onclick = async () => { if (confirm("Tem certeza que deseja EXCLUIR esta sugestão?")) { ui.showLoader(); await api.deleteSuggestion(suggestionId); ui.hideLoader(); closeModal('suggestionModal'); showModal('Sugestão Excluída', 'Removida permanentemente.', 'successModal'); } }; } else { adminSections.forEach(el => el.style.display = 'none'); } modal.classList.remove('hidden'); }
 function setupEventListeners() {
     document.getElementById('publishForm')?.addEventListener('submit', handlePublishFormSubmit);
     document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
@@ -283,7 +313,7 @@ function initializeApp() {
 
     api.onProductsChange(snapshot => refreshDataAndRender(snapshot, 'products'));
     api.onUsersChange(snapshot => refreshDataAndRender(snapshot, 'users'));
-    api.onSuggestionsChange(snapshot => refreshDataAndRender(snapshot, 'suggestions'));
+    pi.onSuggestionsChange(snapshot => refreshDataAndRender(snapshot, 'suggestions'));
 
     const currentUser = auth.getCurrentUser();
     if (currentUser) { 
@@ -296,3 +326,4 @@ function initializeApp() {
 
 
 document.addEventListener("DOMContentLoaded", initializeApp);
+
