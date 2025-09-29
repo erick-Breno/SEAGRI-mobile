@@ -18,7 +18,7 @@ export function createProductCard(product, onCardClick) {
     content.innerHTML = `
         <h3>${product.name}</h3>
         <p>${getCategoryName(product.category)}</p>
-        <p class="price">${product.price}</p>
+        <p class="price">${product.price} R$</p>
         <p>Por: ${product.userName}</p>
     `;
     
@@ -37,7 +37,7 @@ export function createFeaturedProductCard(product, onCardClick) {
     const content = createElement('div', 'product-content');
     content.innerHTML = `
         <h3>${product.name}</h3>
-        <p class="price">${product.price}</p>
+        <p class="price">${product.price} R$</p>
     `;
     
     card.append(image, content);
@@ -52,7 +52,7 @@ export function createUserProductCard(product, onEdit, onDelete) {
     image.style.backgroundImage = `url('${product.image}')`;
 
     const content = createElement('div', 'product-content');
-    content.innerHTML = `<h3>${product.name}</h3><p class="price">${product.price}</p>`;
+    content.innerHTML = `<h3>${product.name}</h3><p class="price">${product.price} R$</p>`;
 
     const actions = createElement('div', 'user-product-actions');
     const editBtn = createElement('button', 'btn btn-secondary', '<i class="ri-edit-2-line"></i> Editar');
@@ -163,4 +163,5 @@ export function createSuggestionCard(suggestion, isAdminView, onClick) {
     card.addEventListener('click', () => onClick(suggestion.id));
 
     return card;
+
 }
