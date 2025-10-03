@@ -577,6 +577,7 @@ body.theme-yellow .stat-icon { box-shadow: 0 0 20px rgba(234, 179, 8, 0.4); }
   background-color: var(--gray-700);
   color: var(--gray-300);
   border-radius: 99px;
+border: none;
 }
 
 .filter-btn:hover,
