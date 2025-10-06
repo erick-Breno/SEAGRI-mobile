@@ -96,16 +96,11 @@
               <p class="text-center text-gray-400 mb-6">Acompanhe suas sugestões enviadas e suas respostas</p>
               
               <div id="user-suggestions-list" class="suggestions-list">
-              </div><div id="no-user-suggestions" class="no-content hidden">
+              <div id="no-user-suggestions" class="no-content hidden">
                 <i class="ri-chat-history-line"></i>
-                <h3>Nenhuma sugestão enviada</h3>
-                <button onclick="showSection('home')" class="btn btn-primary">Enviar uma Sugestão</button>
-                <p class="text-gray-400 mb-4">Você ainda não enviou nenhuma sugestão de melhoria.</p>
-                <button onclick="document.getElementById('contactSubject').focus()" class="btn btn-primary">
-                  <i class="ri-add-line"></i> Enviar Primeira Sugestão
-                </button>
-              
-            </div>
+                <h3>Nenhuma sugestão enviada ainda</h3>
+                <p>Quando você enviar uma sugestão, ela e a resposta do administrador aparecerão aqui.</p>
+              </div>
           </section>
         <section id="admin-panel" class="section-content hidden"><div class="section-container"><h2><i class="ri-shield-user-line"></i> Painel do Administrador</h2><div class="admin-tabs"><button class="admin-tab-btn active" data-tab="users">Usuários</button>
           <button class="admin-tab-btn" data-tab="suggestions">Sugestões</button>
@@ -187,8 +182,25 @@
       </div>
     </div>
 
+    <div id="productDetailModal" class="modal hidden">
+  <div class="modal-content product-detail-modal-content" role="dialog">
+    <div class="modal-header">
+      <h3 id="modalProductName">Nome do Produto</h3>
+      <button class="close-btn close-modal-btn" data-modal-id="productDetailModal"><i class="ri-close-line"></i></button>
+    </div>
+    <div class="modal-body" style="text-align: left;">
+      <img id="modalProductImage" src="" alt="Imagem do Produto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+      <p><strong>Preço:</strong> <span id="modalProductPrice"></span></p>
+      <p><strong>Vendido por:</strong> <span id="modalProductSeller" class="link-button" style="cursor: pointer;"></span></p>
+      <hr class="modal-divider"/>
+      <h4>Descrição:</h4>
+      <p id="modalProductDescription" style="white-space: pre-wrap;"></p>
+    </div>
+  </div>
+</div>
+
     <button id="admin-logout-btn" class="admin-logout-btn hidden"><i class="ri-logout-box-r-line"></i> Sair</button>
-    
+     <script src="cordova.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>

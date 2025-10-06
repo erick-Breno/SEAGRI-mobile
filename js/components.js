@@ -23,7 +23,8 @@ export function createProductCard(product, onCardClick) {
     `;
     
     card.append(image, content);
-    card.addEventListener('click', () => onCardClick(product.userId)); // MODIFICADO: agora passa userId
+    // Passa o objeto 'product' inteiro
+    card.addEventListener('click', () => onCardClick(product));
     return card;
 }
 
@@ -41,7 +42,8 @@ export function createFeaturedProductCard(product, onCardClick) {
     `;
     
     card.append(image, content);
-    card.addEventListener('click', () => onCardClick(product.userId)); // MODIFICADO: agora passa userId
+    // MODIFICADO: Agora passa o objeto 'product' inteiro, corrigindo o erro.
+    card.addEventListener('click', () => onCardClick(product)); 
     return card;
 }
 
@@ -79,7 +81,7 @@ export function createSellerProfile(seller, products) {
             </div>
             <div class="profile-header-info">
                 <h2><i class="ri-store-2-line"></i> ${seller.name}</h2>
-                <p id="profileEmail" class="profile-email-display">${seller.email}</p>
+                <p class="profile-email-display">${seller.email}</p>
             </div>
             <div class="profile-header-actions">
                 <a href="https://wa.me/55${(seller.phone || '').replace(/\D/g, "")}?text=Olá! Vi seus produtos no AgroConnect." target="_blank" class="btn btn-primary"><i class="ri-whatsapp-line"></i> Contato</a>
@@ -100,7 +102,7 @@ export function createSellerProfile(seller, products) {
             const img = document.createElement('img');
             img.src = url;
             img.alt = 'Foto da galeria';
-            img.onclick = () => window.openGalleryModal(url); // Conecta ao modal
+            img.onclick = () => window.openGalleryModal(url);
             galleryGrid.appendChild(img);
         });
     } else {
@@ -114,7 +116,6 @@ export function createSellerProfile(seller, products) {
     const productsGrid = createElement('div', 'products-grid');
     if (products.length > 0) {
         products.forEach(p => {
-             // Usamos o card normal, mas sem o click para perfil (já estamos nele)
             const card = createProductCard(p, () => {});
             card.style.cursor = 'default';
             productsGrid.appendChild(card);
@@ -138,19 +139,15 @@ export function createUserAdminCard(user, productCount) {
     `;
     return card;
 }
-// Adicione esta função ao final do arquivo components.js
 
 export function createSuggestionCard(suggestion, isAdminView, onClick) {
-    // Usa uma classe diferente se for a visão do admin
     const cardClass = isAdminView ? 'suggestion-card-item' : 'user-suggestion-card';
     const card = createElement('div', cardClass);
 
-    // Adiciona classe 'replied' para estilização se já foi respondida
     if (suggestion.status === 'replied') {
         card.classList.add('replied');
     }
 
-    // Conteúdo do card
     card.innerHTML = `
         <h4>${suggestion.subject}</h4>
         <div class="suggestion-meta-info">
@@ -159,9 +156,7 @@ export function createSuggestionCard(suggestion, isAdminView, onClick) {
         </div>
     `;
 
-    // Adiciona o evento de clique para abrir o modal
     card.addEventListener('click', () => onClick(suggestion.id));
 
     return card;
-
 }

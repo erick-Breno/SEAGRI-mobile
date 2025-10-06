@@ -25,7 +25,8 @@ function renderCurrentSection() {
     switch (state.currentSection) {
         case 'home':
             const featured = [...state.products.filter(p => p.status === 'available')].sort(() => 0.5 - Math.random()).slice(0, 4);
-            ui.renderFeaturedProducts(featured, navigateToSellerProfile);
+            // MODIFICADO: Chama o novo modal de detalhes em vez de navegar direto
+            ui.renderFeaturedProducts(featured, openProductDetailModal);
             break;
         case 'produtos':
             const available = state.products.filter(p => p.status === 'available');
@@ -33,7 +34,8 @@ function renderCurrentSection() {
             const searchFiltered = state.searchTerm 
                 ? categoryFiltered.filter(p => p.name.toLowerCase().includes(state.searchTerm.toLowerCase()))
                 : categoryFiltered;
-            ui.renderProducts(searchFiltered, navigateToSellerProfile);
+            // MODIFICADO: Chama o novo modal de detalhes em vez de navegar direto
+            ui.renderProducts(searchFiltered, openProductDetailModal);
             break;
         case 'perfil':
             if (user && !user.isAdmin) {
@@ -43,12 +45,14 @@ function renderCurrentSection() {
                 ui.renderUserProducts(userProducts, openEditProductForm, openDeleteProductConfirm);
             }
             break;
-        case 'notificacoes':
+        // NOVO: Lógica para renderizar sugestões na própria página de contato
+        case 'contato':
             if (user && !user.isAdmin) {
                 const userSuggestions = state.suggestions.filter(s => s.userId === user.id);
                 ui.renderUserSuggestions(userSuggestions, openSuggestionModal);
             }
             break;
+        // REMOVIDO: O case 'notificacoes' foi unificado com 'contato' para simplificar o fluxo.
         case 'admin-panel':
             if (user && user.isAdmin) {
                 renderAdminPanel();
@@ -74,7 +78,34 @@ function renderAdminPanel() {
     
     ui.renderAdminUsers(filteredUsers);
 }
-async function handleContactForm(e) { e.preventDefault(); ui.showLoader(); const user = auth.getCurrentUser(); const newSuggestion = { userId: user.id, subject: document.getElementById("contactSubject").value.trim(), message: document.getElementById("contactMessage").value.trim(), userName: user.name, userEmail: user.email, createdAt: new Date().toISOString(), status: 'pending', reply: '' }; try { await api.saveNewSuggestion(newSuggestion); ui.resetForm("contactForm"); showModal("Sugestão Enviada!", "Obrigado! Acompanhe a resposta na aba de Notificações.", 'successModal'); navigateTo('notificacoes'); } catch(err) { showModal("Erro", "Não foi possível enviar a sugestão.", 'successModal'); } finally { ui.hideLoader(); } }
+
+async function handleContactForm(e) {
+    e.preventDefault();
+    ui.showLoader();
+    const user = auth.getCurrentUser();
+    const newSuggestion = {
+        userId: user.id,
+        subject: document.getElementById("contactSubject").value.trim(),
+        message: document.getElementById("contactMessage").value.trim(),
+        userName: user.name,
+        userEmail: user.email,
+        createdAt: new Date().toISOString(),
+        status: 'pending',
+        reply: ''
+    };
+    try {
+        await api.saveNewSuggestion(newSuggestion);
+        ui.resetForm("contactForm");
+        // MODIFICADO: Mensagem e fluxo melhorados. O usuário permanece na página.
+        showModal("Sugestão Enviada!", "Obrigado! Acompanhe a resposta nesta mesma página.", 'successModal');
+        // REMOVIDO: navigateTo('notificacoes'); não é mais necessário.
+    } catch(err) {
+        showModal("Erro", "Não foi possível enviar a sugestão.", 'successModal');
+    } finally {
+        ui.hideLoader();
+    }
+}
+
 
 async function handleLogin(e) { e.preventDefault(); ui.showLoader(); const email = document.getElementById("loginEmail").value; const password = document.getElementById("loginPassword").value; const success = auth.login(email, password, state.users); if (success) { ui.showMainApp(auth.getCurrentUser().isAdmin); navigateTo('home'); } else { showModal("Erro", "Email ou senha incorretos!", 'successModal'); } ui.hideLoader(); }
 
@@ -172,6 +203,31 @@ function handleSearchInput(e) { state.searchTerm = e.target.value; renderCurrent
 function showModal(title, msg, id) { const modal = document.getElementById(id); const titleEl = modal?.querySelector(".modal-title"); const msgEl = modal?.querySelector("#modalMessage"); if (titleEl) titleEl.textContent = title; if (msgEl) msgEl.textContent = msg; modal?.classList.remove("hidden"); }
 function closeModal(id) { document.getElementById(id)?.classList.add("hidden"); }
 
+// NOVO: Função para abrir o modal de detalhes do produto
+function openProductDetailModal(product) {
+    const seller = state.users.find(u => u.id === product.userId);
+    if (!product || !seller) return;
+
+    // Popula o modal com os dados do produto
+    document.getElementById('modalProductName').textContent = product.name;
+    document.getElementById('modalProductImage').src = product.image || getDefaultImage(product.category);
+    document.getElementById('modalProductPrice').textContent = `${product.price} R$`;
+    document.getElementById('modalProductDescription').textContent = product.description || 'Nenhuma descrição fornecida.';
+    
+    const sellerEl = document.getElementById('modalProductSeller');
+    sellerEl.textContent = seller.name;
+
+    // Adiciona o evento de clique ao nome do vendedor para navegar para o perfil dele
+    sellerEl.onclick = () => {
+        closeModal('productDetailModal');
+        navigateToSellerProfile(product.userId);
+    };
+
+    // Abre o modal
+    document.getElementById('productDetailModal').classList.remove('hidden');
+}
+
+
 function openEditProductForm(productId) {
     const product = state.products.find(p => p.id === productId);
     if (!product) return;
@@ -262,7 +318,6 @@ function setupEventListeners() {
     
     document.getElementById('product-search-input')?.addEventListener('input', handleSearchInput);
 
-    // Event listeners para os novos botões de seleção de imagem
     document.getElementById('selectProductImageBtn').addEventListener('click', async () => {
         try {
             const file = await openImageUploader({ multiple: false });
@@ -326,5 +381,3 @@ function initializeApp() {
 
 
 document.addEventListener("DOMContentLoaded", initializeApp);
-
-
